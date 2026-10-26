@@ -195,8 +195,6 @@
         { id: "lfcn", label: "Lat. femoral cut." },
         { id: "acb",  label: "Adductor canal" },
         { id: "ipack",label: "IPACK" },
-        { id: "obt",  label: "Obturator" },
-        { id: "lp",   label: "Lumbar plexus" },
         { id: "sci",  label: "Sciatic (proximal)" },
         { id: "pop",  label: "Popliteal sciatic" },
         { id: "ank",  label: "Ankle" }
@@ -210,7 +208,7 @@
           pt: "For some foot and ankle operations, the block can be the only anaesthetic, so you can avoid a general anaesthetic." }
       ]),
       risks: [
-        { id: "l_falls",  band: "common", freq: "less with strength-sparing blocks", blocks: ["fem", "fic", "lp", "acb", "peng", "obt"],
+        { id: "l_falls",  band: "common", freq: "less with strength-sparing blocks", blocks: ["fem", "fic", "acb", "peng"],
           short: "Thigh weakness → falls",
           pt: "Your thigh muscles may be weak, so your knee can give way. Do not stand or walk without help until your leg strength has fully returned." },
         { id: "l_heel",   band: "uncommon", blocks: ["sci", "pop", "ank"],
@@ -218,10 +216,7 @@
           pt: "You may be unable to lift your foot for a while. Because the foot is numb, the heel can get a pressure sore — the nurses will help you change position." },
         { id: "l_compart",band: "rare", blocks: ["sci", "pop", "fem"],
           short: "Masked compartment syndrome",
-          pt: "After some leg fractures, swelling can squeeze the muscles (compartment syndrome). A block could hide the warning pain, so you will be checked regularly. Tell us at once about increasing pain or a tight, swollen leg." },
-        { id: "l_lp",     band: "rare", blocks: ["lp"],
-          short: "Lumbar plexus: epidural spread, deep haematoma",
-          pt: "With the deep (psoas) block, the local anaesthetic can spread to both legs or lower your blood pressure, and rarely there is bleeding deep in the back." }
+          pt: "After some leg fractures, swelling can squeeze the muscles (compartment syndrome). A block could hide the warning pain, so you will be checked regularly. Tell us at once about increasing pain or a tight, swollen leg." }
       ],
       alternatives: [ALT.oral, ALT.lai, ALT.neurax, ALT.ga, ALT.other],
       aftercare: [

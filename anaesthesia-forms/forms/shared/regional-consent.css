@@ -29,9 +29,8 @@
 .rc .lh-hosp { font-weight: 700; font-size: 10.5pt; }
 .rc .lh-dept { font-weight: 700; font-size: 9pt; color: #333; }
 .rc .lh-rule {
-  height: 1.3mm; margin: 1.8mm 0 2.2mm;
-  background: linear-gradient(90deg, rgba(25, 70, 140, 0) 0%, var(--blue) 35%, var(--blue) 100%);
-  clip-path: polygon(0 70%, 100% 0, 100% 100%, 0 100%);
+  height: 0.9mm; margin: 2mm 0 2.4mm;
+  background: var(--blue);
 }
 
 /* Patient sticker box */
@@ -100,7 +99,6 @@
 
 /* ---------- Risks: one line per frequency group ---------- */
 .rc table.risks { width: 100%; border-collapse: collapse; table-layout: fixed; }
-.rc .risks col.c-t { width: 5mm; }
 .rc .risks col.c-b { width: 44mm; }
 .rc .risks tr.sub th {
   text-align: left; font-weight: 700; font-size: 7.8pt; letter-spacing: 0.02em;
@@ -108,13 +106,10 @@
 }
 .rc .risks tr.sub:first-child th { padding-top: 0; }
 .rc .risks td { padding: 1mm 1mm; line-height: 1.25; border-bottom: 0.4pt solid #bdbdbd; vertical-align: top; }
-.rc .risks td.t { padding: 1mm 0 0 0.4mm; }
-.rc .risks td.t .tick > .box { margin-top: 0.45mm; }
 .rc .risks td.band { white-space: nowrap; }
 .rc .risks td.band span { font-size: 7.8pt; color: #333; }
 .rc .risks .sep { font-style: normal; color: #777; }
 .rc .risks tr.wr td { border-bottom: 0; padding-top: 0.6mm; }
-.rc .risks tr.wr td.t .tick > .box { margin-top: 1.4mm; }
 .rc .risks tr.wr input { height: 5mm; padding: 0 0.6mm; border-bottom: var(--rule); font-size: 8.6pt; }
 
 /* ---------- Alternatives | Aftercare ---------- */
@@ -150,3 +145,16 @@
 @media print {
   .rc .risks span.hl, .rc label.tick.hl { background: none !important; }
 }
+
+/* Section-level tick boxes (heading carries the tick; items below are a plain list) */
+.rc .sec > .tick { gap: 1.6mm; align-items: center; }
+.rc .sec > .tick > .box { margin-top: 0; }
+.rc .risks tr.sub th .tick { gap: 1.6mm; align-items: center; }
+.rc .risks tr.sub th .tick > .box { margin-top: 0; }
+.rc .item { position: relative; padding-left: 3.2mm; }
+.rc .item::before { content: "•"; position: absolute; left: 0.6mm; top: 0; color: #444; }
+.rc .risks td { padding-left: 4.5mm; }
+.rc .risks td + td { padding-left: 1mm; }
+.rc .risks tr.wr td { padding-left: 4.5mm; }
+@media screen { .rc .item.hl { background: rgba(255, 196, 0, 0.22); border-radius: 2px; } }
+@media print { .rc .item.hl { background: none !important; } }

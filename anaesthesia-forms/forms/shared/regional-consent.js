@@ -27,6 +27,10 @@
   function circ(name, text, group) {
     return '<label class="circ"><input type="checkbox" name="' + name + '"' + (group ? ' data-group="' + group + '"' : "") + "><span>" + text + "</span></label>";
   }
+  // A listed item without its own tick box (its section heading carries the tick)
+  function item(b) {
+    return '<span class="item"' + (b.blocks ? ' data-blocks="' + b.blocks.join(" ") + '"' : "") + ">" + esc(b.form) + "</span>";
+  }
   function field(label, name, style, extra) {
     return '<label class="field"' + (style ? ' style="' + style + '"' : "") + '><span class="lbl">' + label +
       '</span><input class="ln" name="' + name + '"' + (extra || "") + "></label>";
@@ -72,25 +76,21 @@
 
     // ---------- 2. benefits (emphasised) ----------
     h += '<div class="benefits">' +
-      '<h3 class="sec">2. Benefits discussed <span class="aside">why a block is recommended for this patient</span></h3>' +
-      '<div class="grid2">' +
-      f.benefits.map(function (b) {
-        return tick(b.id, esc(b.form), b.blocks ? ' data-blocks="' + b.blocks.join(" ") + '"' : "");
-      }).join("") +
+      '<h3 class="sec">' + tick("benefits_discussed", "2. Benefits discussed") + '<span class="aside">why a block is recommended for this patient</span></h3>' +
+      '<div class="grid2">' + f.benefits.map(item).join("") +
       "</div>" + field("Other benefit", "b_other", "margin-top:0.6mm") + "</div>";
 
     // ---------- 3. risks (compact: one line per frequency group) ----------
     // Full wording and exact frequencies are in the patient leaflet.
     h += '<h3 class="sec">3. Risks discussed <span class="aside">most patients have no complications · details and figures in the patient leaflet</span></h3>';
-    h += '<table class="risks"><colgroup><col class="c-t"><col class="c-b"><col></colgroup><tbody>';
+    h += '<table class="risks"><colgroup><col class="c-b"><col></colgroup><tbody>';
 
-    function bandRows(prefix, risks, title) {
-      var out = '<tr class="sub"><th colspan="3">' + title + "</th></tr>";
+    function bandRows(name, risks, title) {
+      var out = '<tr class="sub"><th colspan="2">' + tick(name, title) + "</th></tr>";
       R.FORM_BANDS.forEach(function (g) {
         var items = risks.filter(function (r) { return g.bands.indexOf(r.band) !== -1; });
         if (!items.length) return;
         out += "<tr>" +
-          '<td class="t">' + tick(prefix + g.key, "") + "</td>" +
           '<td class="band"><b>' + g.label + "</b> <span>(" + g.range + ")</span></td>" +
           "<td>" + items.map(function (r) {
             return "<span" + (r.blocks ? ' data-blocks="' + r.blocks.join(" ") + '"' : "") + ">" + esc(r.short) + "</span>";
@@ -98,13 +98,13 @@
       });
       return out;
     }
-    h += bandRows("rg_", R.GENERAL_RISKS, "General — all nerve and plane blocks");
-    if (f.risks.length) h += bandRows("rs_", f.risks, "Block-specific");
-    else h += '<tr class="sub"><th colspan="3">Additional risks discussed</th></tr>';
+    h += bandRows("risks_general", R.GENERAL_RISKS, "General — all nerve and plane blocks");
+    if (f.risks.length) h += bandRows("risks_specific", f.risks, "Block-specific");
+    else h += '<tr class="sub"><th colspan="2">' + tick("risks_additional", "Additional risks discussed") + "</th></tr>";
 
     var n = f.extraLines || 1;
     for (var i = 1; i <= n; i++) {
-      h += '<tr class="wr"><td class="t">' + tick("rx_" + i, "") + "</td>" +
+      h += '<tr class="wr">' +
         '<td colspan="2"><input name="rx_' + i + '_text" aria-label="Additional risk discussed ' + i + '"' +
         (f.extraLines ? "" : ' placeholder="Other risk discussed"') + "></td></tr>";
     }
@@ -114,8 +114,8 @@
     h += '<div class="two">' +
       '<div><h3 class="sec">4. Alternatives discussed</h3><div class="list">' +
         f.alternatives.map(function (a) { return tick(a.id, esc(a.form)); }).join("") + "</div></div>" +
-      '<div><h3 class="sec">5. Aftercare advised</h3><div class="list">' +
-        f.aftercare.map(function (a) { return tick(a.id, esc(a.form)); }).join("") + "</div></div>" +
+      '<div><h3 class="sec">' + tick("aftercare_advised", "5. Aftercare advised") + '</h3><div class="list bullets">' +
+        f.aftercare.map(item).join("") + "</div></div>" +
       "</div>";
 
     // ---------- 6. confirmation + QR ----------

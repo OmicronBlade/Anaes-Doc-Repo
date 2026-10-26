@@ -100,7 +100,7 @@ window.DOCUMENTS = [
     title: "Regional Consent — General Block",
     category: "Consent",
     description: "Catch-all consent for any peripheral nerve or plane block: benefits, general risks, write-in block-specific risks.",
-    version: "1.1",
+    version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-general.html",
     pdf: {
@@ -116,7 +116,7 @@ window.DOCUMENTS = [
     title: "Regional Consent — Upper Limb",
     category: "Consent",
     description: "Interscalene, supraclavicular, infraclavicular, axillary and distal blocks: benefits, risks by frequency, alternatives.",
-    version: "1.1",
+    version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-upper-limb.html",
     pdf: {
@@ -131,8 +131,8 @@ window.DOCUMENTS = [
     id: "regional-consent-lower-limb",
     title: "Regional Consent — Lower Limb",
     category: "Consent",
-    description: "Fascia iliaca, PENG, femoral, adductor canal, sciatic, popliteal and ankle blocks: benefits, risks by frequency, alternatives.",
-    version: "1.1",
+    description: "Fascia iliaca, PENG, femoral, adductor canal, IPACK, sciatic, popliteal and ankle blocks: benefits, risks by frequency, alternatives.",
+    version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-lower-limb.html",
     pdf: {
@@ -148,7 +148,7 @@ window.DOCUMENTS = [
     title: "Regional Consent — Truncal & Plane",
     category: "Consent",
     description: "Paravertebral, ESP, serratus, PECS, TAP, rectus sheath and QL blocks: benefits, risks by frequency, alternatives.",
-    version: "1.1",
+    version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-truncal.html",
     pdf: {
@@ -184,7 +184,7 @@ window.DOCUMENTS = [
     title: "Patient Leaflet — Leg, Hip & Foot Blocks",
     category: "Patient Information",
     description: "Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
-    version: "1.1",
+    version: "1.2",
     updated: "2026-10-26",
     href: "leaflets/regional-lower-limb.html",
     tags: ["leaflet", "patient information", "nerve block", "regional", "QR"]
