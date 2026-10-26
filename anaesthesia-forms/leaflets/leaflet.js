@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  var VERSION = "1.0 · October 2026";
+  var VERSION = "1.1 · October 2026";
   var R = window.REGIONAL;
   var key = document.body.getAttribute("data-form");
   var f = R.FORMS[key];
@@ -27,11 +27,9 @@
   // ---------- risks grouped by how often they happen ----------
   function risksHtml() {
     var all = R.GENERAL_RISKS.concat(f.risks || []);
-    var cath = R.CATHETER_RISK;
     var out = "";
     ORDER.forEach(function (band) {
       var items = all.filter(function (r) { return r.band === band; });
-      if (band === cath.band) items = items.concat([cath]);
       if (!items.length) return;
       var B = R.BANDS[band];
       var level = ORDER.indexOf(band);   // 0 = expected ... 5 = very rare
@@ -42,15 +40,35 @@
           return '<i class="' + (i < 5 - Math.max(level - 1, 0) && band !== "expected" ? "on" : "") + '"></i>';
         }).join("") + "</span></h3><ul>" +
         items.map(function (r) {
-          var note = r === cath ? "Only if a catheter is used." : (r.blocks ? "Only with some types of block — ask your anaesthetist." : "");
+          var note = r.blocks ? "Only with some types of block — ask your anaesthetist." : "";
           return "<li><span>" + esc(r.pt) + (note ? ' <em class="note">' + esc(note) + "</em>" : "") + "</span></li>";
         }).join("") + "</ul></section>";
     });
     return out;
   }
 
+  // ---------- summary table (the detail that used to be on the consent form) ----------
+  function summaryHtml() {
+    var rows = function (risks) {
+      return ORDER.map(function (band) {
+        return risks.filter(function (r) { return r.band === band; }).map(function (r) {
+          var B = R.BANDS[band];
+          return "<tr><td>" + esc(r.short) + "</td><td><b>" + esc(B.label) + "</b>" +
+            (B.range ? '<span class="rng">' + esc(B.range) + "</span>" : "") +
+            (r.freq ? '<span class="fq">' + esc(r.freq) + "</span>" : "") + "</td></tr>";
+        }).join("");
+      }).join("");
+    };
+    return '<section class="card summary"><h2>Risks at a glance</h2>' +
+      "<p>A summary of the risks above, as discussed with your anaesthetist.</p>" +
+      '<table><thead><tr><th>Risk</th><th>How often</th></tr></thead><tbody>' +
+      '<tr class="grp"><th colspan="2">All nerve and plane blocks</th></tr>' + rows(R.GENERAL_RISKS) +
+      ((f.risks || []).length ? '<tr class="grp"><th colspan="2">Only with some types of block</th></tr>' + rows(f.risks) : "") +
+      "</tbody></table></section>";
+  }
+
   var h = "";
-  h += '<header class="lh"><img src="../assets/img/wcg-logo.jpg" alt="Western Cape Government">' +
+  h += '<header class="lh"><img class="crest" src="../assets/img/nsh-crest.jpg" alt="New Somerset Hospital crest">' +
     '<div class="lh-text"><b>New Somerset Hospital</b><span>Department of Anaesthesia</span></div></header>';
 
   h += '<div class="hero"><p class="kicker">Patient information</p><h1>' + esc(f.ptTitle) + "</h1>" +
@@ -83,8 +101,12 @@
     '<p>After you go home, phone <a href="tel:' + R.CONTACT.phone.replace(/\s/g, "") + '"><b>' + esc(R.CONTACT.phone) + "</b></a> — " + esc(R.CONTACT.text) +
     " If you have chest pain, severe breathlessness or a fit, go to your nearest emergency unit.</p></section>";
 
+  h += summaryHtml();
+
   h += '<footer><p>This leaflet supports, but does not replace, your conversation with your anaesthetist. Frequencies are approximate.</p>' +
-    "<p>Sources: " + R.SOURCES.map(esc).join("; ") + ".</p>" +
+    '<p class="refs-h">References</p><ol class="refs">' + R.SOURCES.map(function (src) {
+      return "<li>" + esc(src.text) + (src.doi ? ' Available from: <a href="https://doi.org/' + src.doi + '">https://doi.org/' + esc(src.doi) + "</a>" : "") + "</li>";
+    }).join("") + "</ol>" +
     '<p class="ver">Version ' + VERSION + ' · <button type="button" class="print screen-only" onclick="window.print()">Print this leaflet</button></p></footer>';
 
   document.getElementById("leaflet").innerHTML = h;

@@ -7,7 +7,8 @@
  *
  * Each item has:
  *   id    unique within its list (also the saved field name on the form)
- *   form  short wording printed on the consent form (clinician language)
+ *   form  wording printed on the consent form (benefits, alternatives, aftercare)
+ *   short (risks) short name — listed by frequency on the form and in the leaflet's summary table
  *   pt    plain-language wording for the patient leaflet
  *   band  (risks) one of the keys in BANDS
  *   freq  (risks, optional) a more precise figure shown next to the band
@@ -33,6 +34,14 @@
     "very-rare": { label: "Very rare", range: "< 1 in 10 000",    pt: "fewer than 1 in 10 000 people" }
   };
 
+  // Groups used on the consent form (simplified: expected and very common fold into Common)
+  var FORM_BANDS = [
+    { key: "common",    label: "Common",    range: "1 in 10–100",       bands: ["expected", "very-common", "common"] },
+    { key: "uncommon",  label: "Uncommon",  range: "1 in 100–1 000",    bands: ["uncommon"] },
+    { key: "rare",      label: "Rare",      range: "1 in 1 000–10 000", bands: ["rare"] },
+    { key: "very-rare", label: "Very rare", range: "< 1 in 10 000",     bands: ["very-rare"] }
+  ];
+
   // ---------------------------------------------------------------------
   // Shared by every peripheral nerve / plane block
   // ---------------------------------------------------------------------
@@ -50,34 +59,34 @@
 
   var GENERAL_RISKS = [
     { id: "r_numb",    band: "expected",
-      form: "Numbness / heaviness of the blocked area (usually 8–24 h, up to 48 h)",
+      short: "Prolonged numbness / weakness (expected 8–24 h)",
       pt: "The area will feel numb, heavy and hard to move for 8 to 24 hours (sometimes up to 48 hours). This is how the block works." },
     { id: "r_fail",    band: "common", freq: "≈ 1 in 10–20",
-      form: "Block fails or works partly: top-up, extra analgesia or GA",
+      short: "Partial or failed block",
       pt: "The block may not work completely. If so, we will give you extra pain medicine, repeat the block or give you a general anaesthetic." },
     { id: "r_rebound", band: "very-common",
-      form: "Rebound pain as the block wears off: start oral analgesia early",
+      short: "Rebound pain as the block wears off",
       pt: "Pain can return quite quickly when the block wears off. Take your pain medicine regularly, before the numbness has gone." },
     { id: "r_bruise",  band: "common",
-      form: "Bruising or tenderness at the injection site",
+      short: "Bruising / tenderness",
       pt: "Bruising or tenderness where the needle went in. This settles by itself." },
     { id: "r_tns",     band: "common", freq: "resolves in days–weeks",
-      form: "Temporary tingling, numbness or weakness after the block should have worn off",
+      short: "Temporary tingling or numbness",
       pt: "Tingling, a patch of numbness or weakness that lasts after the block should have worn off. Almost everyone recovers fully, usually within days to a few weeks." },
     { id: "r_bleed",   band: "uncommon",
-      form: "Bleeding / haematoma (higher with anticoagulants)",
+      short: "Bleeding / haematoma",
       pt: "Bleeding under the skin (a blood collection). This is more likely if you take blood-thinning medicine, so please tell us about all your medicines." },
     { id: "r_last",    band: "rare",
-      form: "Local anaesthetic toxicity: seizures, arrhythmia (monitored; treatment available)",
+      short: "Local anaesthetic toxicity (fits, heart rhythm)",
       pt: "The local anaesthetic can get into the bloodstream and cause a fit or heart rhythm problems. We watch for this closely and have treatment ready." },
     { id: "r_nerve",   band: "rare", freq: "≈ 1 in 2 000–5 000",
-      form: "Nerve damage lasting more than 6 months / permanent",
+      short: "Permanent nerve damage (> 6 months)",
       pt: "Nerve damage that lasts longer than 6 months or is permanent (weakness, numbness or pain)." },
     { id: "r_infect",  band: "very-rare",
-      form: "Infection / abscess at the injection site (higher with catheters)",
+      short: "Infection",
       pt: "Infection at the injection site. We use a sterile (clean) technique to prevent this." },
     { id: "r_allergy", band: "very-rare",
-      form: "Severe allergic reaction to local anaesthetic",
+      short: "Severe allergic reaction",
       pt: "A serious allergic reaction to the medicines used." }
   ];
 
@@ -85,7 +94,6 @@
     oral:   { id: "a_analg", form: "Oral / IV analgesia (incl. opioids or PCA)", pt: "Pain medicine by mouth or through the drip, including morphine-type medicine or a patient-controlled pump (PCA)." },
     lai:    { id: "a_lai",   form: "Local anaesthetic infiltration by surgeon",  pt: "Local anaesthetic injected into the wound by the surgeon." },
     neurax: { id: "a_neurax",form: "Spinal / epidural",                          pt: "A spinal or epidural injection in the back." },
-    epi:    { id: "a_epi",   form: "Epidural (thoracic)",                        pt: "An epidural injection in the back." },
     ga:     { id: "a_ga",    form: "General anaesthetic without a block",        pt: "A general anaesthetic (being fully asleep) without a nerve block, with pain medicine afterwards." },
     other:  { id: "a_other", form: "A different block",                          pt: "A different type of nerve block." }
   };
@@ -116,7 +124,7 @@
         { id: "b_awake", form: "Avoid GA or allow lighter GA / sedation",
           pt: "Depending on the operation, you may be able to stay awake or lightly sedated instead of having a general anaesthetic, or need less general anaesthetic." }
       ]),
-      specificLines: 5,             // write-in block-specific risks
+      extraLines: 2,                // write-in lines for additional (block-specific) risks
       risks: [],
       alternatives: [ALT.oral, ALT.lai, ALT.neurax, ALT.ga, ALT.other],
       aftercare: [GENERAL_AFTERCARE.protect, GENERAL_AFTERCARE.analg, GENERAL_AFTERCARE.report]
@@ -126,6 +134,7 @@
     "upper-limb": {
       title: "Upper Limb Nerve Block",
       leaflet: "regional-upper-limb",
+      sides: ["Left", "Right"],
       ptTitle: "Arm and shoulder nerve blocks",
       ptArea: "your shoulder, arm or hand",
       ptWhat: "The nerves to your shoulder, arm and hand run from the side of your neck, past the collarbone and through the armpit. The anaesthetist injects local anaesthetic (numbing medicine) next to these nerves — in the neck, above or below the collarbone, in the armpit or lower down the arm, depending on your operation — using an ultrasound machine to guide a thin needle. Your arm becomes numb, warm and heavy over 10 to 30 minutes.",
@@ -145,20 +154,20 @@
           pt: "Shoulder operations are among the most painful operations. A block gives much better pain relief than tablets or injections alone." }
       ]),
       risks: [
-        { id: "u_phrenic", band: "very-common", freq: "ISB ≈ all; less with others", blocks: ["isb", "stb", "scb"],
-          form: "Diaphragm weakness on that side → breathlessness (caution in lung disease)",
+        { id: "u_phrenic", band: "very-common", freq: "almost everyone with neck blocks; fewer with others", blocks: ["isb", "stb", "scb"],
+          short: "Diaphragm weakness / breathlessness",
           pt: "The nerve to the breathing muscle (diaphragm) on that side is often blocked as well. You may feel a little short of breath until the block wears off. Tell us if you have lung disease." },
         { id: "u_horner",  band: "common", freq: "temporary", blocks: ["isb", "stb", "scb"],
-          form: "Horner’s syndrome, hoarse voice, blocked nose (temporary)",
+          short: "Horner’s syndrome, hoarse voice",
           pt: "A droopy eyelid, small pupil, blocked nose or hoarse voice on that side. These go away when the block wears off." },
         { id: "u_ptx",     band: "rare", freq: "with ultrasound", blocks: ["scb", "icb", "isb"],
-          form: "Pneumothorax",
+          short: "Pneumothorax (collapsed lung)",
           pt: "A puncture of the lung (collapsed lung), causing chest pain and shortness of breath. It may need a chest drain." },
         { id: "u_phrenic_long", band: "rare", blocks: ["isb", "stb"],
-          form: "Prolonged diaphragm weakness (months)",
+          short: "Prolonged diaphragm weakness",
           pt: "Weakness of the breathing muscle that lasts for months." },
         { id: "u_spinal",  band: "very-rare", blocks: ["isb"],
-          form: "Spread to the epidural / spinal space or spinal cord injury",
+          short: "Epidural / spinal spread, spinal cord injury",
           pt: "The local anaesthetic spreads to the spinal cord area, causing temporary weakness of both arms or breathing difficulty, or (extremely rarely) spinal cord injury." }
       ],
       alternatives: [ALT.oral, ALT.lai, ALT.ga, ALT.other],
@@ -183,11 +192,11 @@
         { id: "fic",  label: "Fascia iliaca" },
         { id: "peng", label: "PENG" },
         { id: "fem",  label: "Femoral" },
-        { id: "lfcn", label: "Lat. femoral cutaneous" },
+        { id: "lfcn", label: "Lat. femoral cut." },
         { id: "acb",  label: "Adductor canal" },
         { id: "ipack",label: "IPACK" },
         { id: "obt",  label: "Obturator" },
-        { id: "lp",   label: "Lumbar plexus (psoas)" },
+        { id: "lp",   label: "Lumbar plexus" },
         { id: "sci",  label: "Sciatic (proximal)" },
         { id: "pop",  label: "Popliteal sciatic" },
         { id: "ank",  label: "Ankle" }
@@ -201,17 +210,17 @@
           pt: "For some foot and ankle operations, the block can be the only anaesthetic, so you can avoid a general anaesthetic." }
       ]),
       risks: [
-        { id: "l_falls",  band: "common", freq: "less with ACB / PENG", blocks: ["fem", "fic", "lp", "acb", "peng", "obt"],
-          form: "Quadriceps weakness → knee gives way → falls",
+        { id: "l_falls",  band: "common", freq: "less with strength-sparing blocks", blocks: ["fem", "fic", "lp", "acb", "peng", "obt"],
+          short: "Thigh weakness → falls",
           pt: "Your thigh muscles may be weak, so your knee can give way. Do not stand or walk without help until your leg strength has fully returned." },
         { id: "l_heel",   band: "uncommon", blocks: ["sci", "pop", "ank"],
-          form: "Foot drop; pressure injury to numb heel / foot",
+          short: "Foot drop / heel pressure injury",
           pt: "You may be unable to lift your foot for a while. Because the foot is numb, the heel can get a pressure sore — the nurses will help you change position." },
         { id: "l_compart",band: "rare", blocks: ["sci", "pop", "fem"],
-          form: "May mask compartment syndrome (high-risk fractures): monitoring plan agreed with surgeon",
+          short: "Masked compartment syndrome",
           pt: "After some leg fractures, swelling can squeeze the muscles (compartment syndrome). A block could hide the warning pain, so you will be checked regularly. Tell us at once about increasing pain or a tight, swollen leg." },
         { id: "l_lp",     band: "rare", blocks: ["lp"],
-          form: "Lumbar plexus: epidural spread (hypotension, bilateral block), retroperitoneal / renal haematoma",
+          short: "Lumbar plexus: epidural spread, deep haematoma",
           pt: "With the deep (psoas) block, the local anaesthetic can spread to both legs or lower your blood pressure, and rarely there is bleeding deep in the back." }
       ],
       alternatives: [ALT.oral, ALT.lai, ALT.neurax, ALT.ga, ALT.other],
@@ -231,7 +240,7 @@
       leaflet: "regional-truncal",
       ptTitle: "Chest, back and tummy (plane) blocks",
       ptArea: "your chest, back or tummy wall",
-      ptWhat: "The nerves to the chest and tummy wall run between layers of muscle (planes). The anaesthetist injects local anaesthetic (numbing medicine) into one of these layers — beside the spine, on the side of the chest or in the tummy wall, sometimes on both sides — using an ultrasound machine to guide a thin needle. Sometimes a thin tube (catheter) is left in to give pain relief for a few days.",
+      ptWhat: "The nerves to the chest and tummy wall run between layers of muscle (planes). The anaesthetist injects local anaesthetic (numbing medicine) into one of these layers — beside the spine, on the side of the chest or in the tummy wall, sometimes on both sides — using an ultrasound machine to guide a thin needle.",
       blocks: [
         { id: "pvb",  label: "Paravertebral" },
         { id: "esp",  label: "Erector spinae (ESP)" },
@@ -252,26 +261,25 @@
       ]),
       risks: [
         { id: "t_partial", band: "expected",
-          form: "Plane blocks cover the chest / abdominal wall, not visceral pain: other analgesia still needed",
+          short: "Visceral pain not covered",
           pt: "These blocks numb the skin and muscles of the chest or tummy wall, not the organs inside. You will still need some other pain medicine." },
-        { id: "t_hypo",   band: "common", freq: "PVB; less with QL / ESP", blocks: ["pvb", "ql", "esp"],
-          form: "Hypotension / epidural spread (both sides numb)",
+        { id: "t_hypo",   band: "common", freq: "mainly with blocks beside the spine", blocks: ["pvb", "ql", "esp"],
+          short: "Hypotension / epidural spread",
           pt: "Low blood pressure, or the local anaesthetic spreading to both sides of the body. This is easily treated." },
-        { id: "t_ptx",    band: "uncommon", freq: "PVB ≈ 1 in 200; others rare", blocks: ["pvb", "icn", "sap", "pecs", "pst", "esp"],
-          form: "Pneumothorax",
+        { id: "t_ptx",    band: "uncommon", freq: "≈ 1 in 200 beside the spine; rarer with others", blocks: ["pvb", "icn", "sap", "pecs", "pst", "esp"],
+          short: "Pneumothorax (collapsed lung)",
           pt: "A puncture of the lung (collapsed lung), causing chest pain and shortness of breath. It may need a chest drain." },
         { id: "t_leg",    band: "uncommon", blocks: ["ql", "tap", "ilih"],
-          form: "Leg weakness / numbness from lumbar plexus spread: assist first mobilisation",
+          short: "Leg weakness / numbness",
           pt: "Numbness or weakness of the leg for a few hours. Have someone with you the first time you get up." },
         { id: "t_dose",   band: "rare", blocks: ["tap", "rsb", "ql", "icn", "esp"],
-          form: "Higher LA toxicity risk with bilateral / multiple-level blocks (dose-limited, monitored)",
+          short: "LA toxicity with bilateral blocks",
           pt: "Blocks on both sides need more local anaesthetic, which slightly increases the risk of it affecting the brain or heart. We keep the dose safe and monitor you." },
         { id: "t_organ",  band: "very-rare", freq: "with ultrasound", blocks: ["tap", "rsb", "ql", "ilih"],
-          form: "Bowel, liver, spleen or kidney puncture",
+          short: "Bowel or organ puncture",
           pt: "Injury to the bowel or an organ in the tummy (liver, spleen or kidney)." }
       ],
-      catheterRisk: true,
-      alternatives: [ALT.oral, ALT.lai, ALT.epi, ALT.ga, ALT.other],
+      alternatives: [ALT.oral, ALT.lai, ALT.ga, ALT.other],
       aftercare: [
         GENERAL_AFTERCARE.analg,
         { id: "c_breath", form: "Report breathlessness or chest pain (pneumothorax)",
@@ -283,21 +291,26 @@
     }
   };
 
-  // Catheter (continuous infusion) — added to any form when "Catheter" is planned
+  // Catheter (continuous infusion). NOT USED for now: catheters are off the forms and leaflets.
+  // To bring back, add it to a form's risks and restore the Catheter technique option.
   var CATHETER_RISK = { id: "r_cath", band: "common",
-    form: "Catheter: leak, dislodgement, blockage; infection risk rises after 48–72 h",
+    short: "Catheter leak / dislodgement",
     pt: "If a thin tube (catheter) is left in for a pain-relief infusion, it can leak, fall out or block. It is usually removed after 2 to 3 days to keep the infection risk low." };
 
   window.REGIONAL = {
     BANDS: BANDS,
+    FORM_BANDS: FORM_BANDS,
     GENERAL_RISKS: GENERAL_RISKS,
     CATHETER_RISK: CATHETER_RISK,
     FORMS: FORMS,
     CONTACT: { phone: "021 402 6911", text: "New Somerset Hospital (general enquiries) — ask for the anaesthetist on call." },
+    // Vancouver style, as in the South African Journal of Anaesthesia and Analgesia
     SOURCES: [
-      "SASA/SASRA Guidelines for Regional Anaesthesia in South Africa (2016)",
-      "McCombe K, Bogod D. Regional anaesthesia: risk, consent and complications. Anaesthesia 2021;76(S1):18–26",
-      "Burger R, Smit M, Plenge U, Gibbs MW. S Afr J Anaesth Analg 2024;30(2):62–66"
+      { text: "South African Society of Regional Anaesthesia (SASRA). SASA guidelines for regional anaesthesia in South Africa 2016. Johannesburg: SASRA; 2016." },
+      { text: "McCombe K, Bogod D. Regional anaesthesia: risk, consent and complications. Anaesthesia. 2021;76(Suppl 1):18-26.",
+        doi: "10.1111/anae.15246" },
+      { text: "Burger R, Smit M, Plenge U, Gibbs MW. Informed consent for peripheral nerve blocks at a tertiary level hospital in South Africa: a quality improvement project. South Afr J Anaesth Analg. 2024;30(2):62-6.",
+        doi: "10.36303/SAJAA.3061" }
     ]
   };
 })();

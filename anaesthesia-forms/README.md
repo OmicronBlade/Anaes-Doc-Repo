@@ -62,6 +62,9 @@ Push to GitHub → Settings → Pages → Deploy from branch → `main` / root.
   blocks, benefits, risks (band + frequency), alternatives, aftercare and the patient-leaflet prose. The patient
   leaflets read the same file, so the form and leaflet always match. Ticking a block highlights (screen only) the
   benefits and risks that apply to it. Based on SASA/SASRA Guidelines 2016 and McCombe & Bogod, Anaesthesia 2021.
+  The form lists risks briefly by frequency group (Common / Uncommon / Rare / Very rare); full wording and exact
+  figures are in the leaflet. Catheters are switched off for now (see `CATHETER_RISK` in the content file).
+  **v1** (detailed risk table, Catheter option, WCG logo) is kept, still working, in `forms/archive/regional-consent-v1/`.
 - **Patient leaflets** (`leaflets/regional-*.html`, `leaflet.js|css`): phone-first pages opened from the QR code on each
   consent form; they also print on A4. QR codes are SVGs in `assets/img/qr/`, made by `python tools/build_qr.py`
   (`pip install qrcode`). If the site address changes, update `BASE_URL` there and `LEAFLET_BASE` in

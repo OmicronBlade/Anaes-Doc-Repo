@@ -37,7 +37,6 @@
 
     // ---------- letterhead + patient sticker ----------
     h += '<header class="lh">' +
-      '<img class="lh-logo" src="../assets/img/wcg-logo.jpg" alt="Western Cape Government">' +
       '<div class="lh-mid"><img class="lh-crest" src="../assets/img/nsh-crest.jpg" alt="">' +
         '<div><div class="lh-hosp">New Somerset Hospital</div><div class="lh-dept">Department of Anaesthesia</div></div></div>' +
       '<div class="pt-box"><div class="pt-tag">PATIENT STICKER</div>' +
@@ -50,7 +49,9 @@
     // ---------- 1. procedure & block ----------
     h += '<h3 class="sec">1. Planned procedure &amp; block</h3>';
     h += '<div class="row">' + field("Procedure", "procedure", "flex:1") +
-      '<span class="lbl">Side:</span>' + circ("side_l", "Left", "side") + circ("side_r", "Right", "side") + circ("side_bi", "Bilateral", "side") + "</div>";
+      '<span class="lbl">Side:</span>' + (f.sides || ["Left", "Right", "Bilateral"]).map(function (sd) {
+        return circ("side_" + sd.toLowerCase().slice(0, 2), sd, "side");
+      }).join("") + "</div>";
 
     if (f.blocks) {
       var cols = f.blocks.length > 8 ? 5 : 4;
@@ -63,8 +64,7 @@
     }
 
     h += '<div class="row">' +
-      '<span class="lbl">Technique:</span>' + circ("tech_single", "Single injection", "tech") + circ("tech_cath", "Catheter", "tech") +
-      '<span class="lbl gapl">With:</span>' + tick("with_alone", "Block alone") + tick("with_sed", "Sedation") + tick("with_ga", "GA") + tick("with_spinal", "Spinal") +
+      '<span class="lbl">Planned with:</span>' + tick("with_alone", "Block alone") + tick("with_sed", "Sedation") + tick("with_ga", "GA") + tick("with_spinal", "Spinal") +
       '<span class="gapl"></span>' + tick("site_marked", "Site marked") +
       "</div>";
     h += '<div class="row"><span class="lbl">Patient has capacity to consent:</span>' + circ("cap_y", "Yes", "cap") + circ("cap_n", "No", "cap") +
@@ -79,28 +79,34 @@
       }).join("") +
       "</div>" + field("Other benefit", "b_other", "margin-top:0.6mm") + "</div>";
 
-    // ---------- 3. risks ----------
-    h += '<h3 class="sec">3. Risks discussed <span class="aside">most patients have no complications; risks were weighed against the benefits</span></h3>';
-    h += '<table class="risks"><colgroup><col class="c-t"><col><col class="c-f"></colgroup>' +
-      '<thead><tr><th></th><th>General — all nerve and plane blocks</th><th>How often</th></tr></thead><tbody>';
+    // ---------- 3. risks (compact: one line per frequency group) ----------
+    // Full wording and exact frequencies are in the patient leaflet.
+    h += '<h3 class="sec">3. Risks discussed <span class="aside">most patients have no complications · details and figures in the patient leaflet</span></h3>';
+    h += '<table class="risks"><colgroup><col class="c-t"><col class="c-b"><col></colgroup><tbody>';
 
-    function riskRow(r) {
-      var band = B[r.band];
-      var how = '<b>' + band.label + "</b>" + (band.range ? " " + band.range : "") + (r.freq ? '<span class="fq"> · ' + esc(r.freq) + "</span>" : "");
-      return '<tr' + (r.blocks ? ' data-blocks="' + r.blocks.join(" ") + '"' : "") + ">" +
-        '<td class="t">' + tick(r.id, "") + "</td>" +
-        "<td>" + esc(r.form) + "</td><td class=\"how band-" + r.band + "\">" + how + "</td></tr>";
+    function bandRows(prefix, risks, title) {
+      var out = '<tr class="sub"><th colspan="3">' + title + "</th></tr>";
+      R.FORM_BANDS.forEach(function (g) {
+        var items = risks.filter(function (r) { return g.bands.indexOf(r.band) !== -1; });
+        if (!items.length) return;
+        out += "<tr>" +
+          '<td class="t">' + tick(prefix + g.key, "") + "</td>" +
+          '<td class="band"><b>' + g.label + "</b> <span>(" + g.range + ")</span></td>" +
+          "<td>" + items.map(function (r) {
+            return "<span" + (r.blocks ? ' data-blocks="' + r.blocks.join(" ") + '"' : "") + ">" + esc(r.short) + "</span>";
+          }).join('<i class="sep"> · </i>') + "</td></tr>";
+      });
+      return out;
     }
-    h += R.GENERAL_RISKS.map(riskRow).join("");
+    h += bandRows("rg_", R.GENERAL_RISKS, "General — all nerve and plane blocks");
+    if (f.risks.length) h += bandRows("rs_", f.risks, "Block-specific");
+    else h += '<tr class="sub"><th colspan="3">Additional risks discussed</th></tr>';
 
-    h += '<tr class="sub"><th></th><th>Block-specific</th><th></th></tr>';
-    if (f.risks.length) h += f.risks.map(riskRow).join("");
-    h += riskRow(R.CATHETER_RISK);
-    var n = f.specificLines || 1;
+    var n = f.extraLines || 1;
     for (var i = 1; i <= n; i++) {
-      h += '<tr class="wr"><td class="t">' + tick("rs_" + i, "") + "</td>" +
-        '<td><input name="rs_' + i + '_text" aria-label="Other risk discussed ' + i + '" placeholder="' + (f.specificLines ? "Block-specific risk" : "Other risk discussed") + '"></td>' +
-        '<td><input name="rs_' + i + '_freq" aria-label="How often ' + i + '"></td></tr>';
+      h += '<tr class="wr"><td class="t">' + tick("rx_" + i, "") + "</td>" +
+        '<td colspan="2"><input name="rx_' + i + '_text" aria-label="Additional risk discussed ' + i + '"' +
+        (f.extraLines ? "" : ' placeholder="Other risk discussed"') + "></td></tr>";
     }
     h += "</tbody></table>";
 
@@ -149,13 +155,10 @@
     var form = $("#form");
     function update() {
       var picked = $$("input[name^='blk_']:checked", form).map(function (i) { return i.name.slice(4); });
-      var cath = $("input[name='tech_cath']", form);
       $$("[data-blocks]", form).forEach(function (el) {
         var ids = el.getAttribute("data-blocks").split(" ");
         el.classList.toggle("hl", picked.some(function (p) { return ids.indexOf(p) !== -1; }));
       });
-      var cathRow = $("input[name='r_cath']", form).closest("tr");
-      cathRow.classList.toggle("hl", !!(cath && cath.checked));
     }
     form.addEventListener("change", update);
     return update;
