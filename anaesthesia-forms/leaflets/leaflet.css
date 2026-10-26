@@ -98,3 +98,17 @@ ol.refs a { word-break: break-all; }
   .summary tr { break-inside: avoid; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* ---------- DRAFT watermark (REGIONAL.DRAFT in forms/shared/regional-content.js) ---------- */
+.watermark {
+  position: fixed; left: 50%; top: 50%; z-index: 5; pointer-events: none;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-family: Arial, sans-serif; font-size: 28vw; font-weight: 700; letter-spacing: 0.08em;
+  color: rgba(217, 45, 32, 0.12); white-space: nowrap;
+}
+.draft-banner {
+  margin: 0 0 10px; padding: 6px 12px; text-align: center;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+  color: #b42318; background: #fef3f2; border: 1px solid #fecdca; border-radius: var(--radius-sm);
+}
+@media print { .watermark { font-size: 130pt; } }

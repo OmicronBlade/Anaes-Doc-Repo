@@ -99,7 +99,7 @@ window.DOCUMENTS = [
     id: "regional-consent-general",
     title: "Regional Consent — General Block",
     category: "Consent",
-    description: "Catch-all consent for any peripheral nerve or plane block: benefits, general risks, write-in block-specific risks.",
+    description: "DRAFT — Catch-all consent for any peripheral nerve or plane block: benefits, general risks, write-in block-specific risks.",
     version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-general.html",
@@ -109,13 +109,13 @@ window.DOCUMENTS = [
       download: "Regional Consent - General Block - Blank.pdf",
       autofill: false
     },
-    tags: ["general", "any block", "PNB", "regional", "nerve block", "consent", "informed consent", "SASRA"]
+    tags: ["draft", "general", "any block", "PNB", "regional", "nerve block", "consent", "informed consent", "SASRA"]
   },
   {
     id: "regional-consent-upper-limb",
     title: "Regional Consent — Upper Limb",
     category: "Consent",
-    description: "Interscalene, supraclavicular, infraclavicular, axillary and distal blocks: benefits, risks by frequency, alternatives.",
+    description: "DRAFT — Interscalene, supraclavicular, infraclavicular, axillary and distal blocks: benefits, risks by frequency, alternatives.",
     version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-upper-limb.html",
@@ -125,13 +125,13 @@ window.DOCUMENTS = [
       download: "Regional Consent - Upper Limb - Blank.pdf",
       autofill: false
     },
-    tags: ["upper limb", "arm", "shoulder", "interscalene", "supraclavicular", "infraclavicular", "axillary", "brachial plexus", "ISB", "regional", "nerve block", "consent", "informed consent", "SASRA"]
+    tags: ["draft", "upper limb", "arm", "shoulder", "interscalene", "supraclavicular", "infraclavicular", "axillary", "brachial plexus", "ISB", "regional", "nerve block", "consent", "informed consent", "SASRA"]
   },
   {
     id: "regional-consent-lower-limb",
     title: "Regional Consent — Lower Limb",
     category: "Consent",
-    description: "Fascia iliaca, PENG, femoral, adductor canal, IPACK, sciatic, popliteal and ankle blocks: benefits, risks by frequency, alternatives.",
+    description: "DRAFT — Fascia iliaca, PENG, femoral, adductor canal, IPACK, sciatic, popliteal and ankle blocks: benefits, risks by frequency, alternatives.",
     version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-lower-limb.html",
@@ -141,13 +141,13 @@ window.DOCUMENTS = [
       download: "Regional Consent - Lower Limb - Blank.pdf",
       autofill: false
     },
-    tags: ["lower limb", "leg", "hip", "knee", "fascia iliaca", "FICB", "PENG", "femoral", "adductor canal", "sciatic", "popliteal", "ankle", "regional", "nerve block", "consent", "informed consent", "SASRA"]
+    tags: ["draft", "lower limb", "leg", "hip", "knee", "fascia iliaca", "FICB", "PENG", "femoral", "adductor canal", "sciatic", "popliteal", "ankle", "regional", "nerve block", "consent", "informed consent", "SASRA"]
   },
   {
     id: "regional-consent-truncal",
     title: "Regional Consent — Truncal & Plane",
     category: "Consent",
-    description: "Paravertebral, ESP, serratus, PECS, TAP, rectus sheath and QL blocks: benefits, risks by frequency, alternatives.",
+    description: "DRAFT — Paravertebral, ESP, serratus, PECS, TAP, rectus sheath and QL blocks: benefits, risks by frequency, alternatives.",
     version: "1.2",
     updated: "2026-10-26",
     href: "forms/regional-consent-truncal.html",
@@ -157,47 +157,47 @@ window.DOCUMENTS = [
       download: "Regional Consent - Truncal and Plane - Blank.pdf",
       autofill: false
     },
-    tags: ["truncal", "plane", "fascial plane", "paravertebral", "ESP", "erector spinae", "serratus", "PECS", "TAP", "rectus sheath", "QL", "quadratus lumborum", "rib fractures", "regional", "nerve block", "consent", "informed consent", "SASRA"]
+    tags: ["draft", "truncal", "plane", "fascial plane", "paravertebral", "ESP", "erector spinae", "serratus", "PECS", "TAP", "rectus sheath", "QL", "quadratus lumborum", "rib fractures", "regional", "nerve block", "consent", "informed consent", "SASRA"]
   },
   {
     id: "leaflet-regional-general",
     title: "Patient Leaflet — Nerve & Plane Blocks",
     category: "Patient Information",
-    description: "Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
+    description: "DRAFT — Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
     version: "1.1",
     updated: "2026-10-26",
     href: "leaflets/regional-general.html",
-    tags: ["leaflet", "patient information", "nerve block", "regional", "QR"]
+    tags: ["draft", "leaflet", "patient information", "nerve block", "regional", "QR"]
   },
   {
     id: "leaflet-regional-upper-limb",
     title: "Patient Leaflet — Arm & Shoulder Blocks",
     category: "Patient Information",
-    description: "Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
+    description: "DRAFT — Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
     version: "1.1",
     updated: "2026-10-26",
     href: "leaflets/regional-upper-limb.html",
-    tags: ["leaflet", "patient information", "nerve block", "regional", "QR"]
+    tags: ["draft", "leaflet", "patient information", "nerve block", "regional", "QR"]
   },
   {
     id: "leaflet-regional-lower-limb",
     title: "Patient Leaflet — Leg, Hip & Foot Blocks",
     category: "Patient Information",
-    description: "Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
+    description: "DRAFT — Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
     version: "1.2",
     updated: "2026-10-26",
     href: "leaflets/regional-lower-limb.html",
-    tags: ["leaflet", "patient information", "nerve block", "regional", "QR"]
+    tags: ["draft", "leaflet", "patient information", "nerve block", "regional", "QR"]
   },
   {
     id: "leaflet-regional-truncal",
     title: "Patient Leaflet — Chest, Back & Tummy Blocks",
     category: "Patient Information",
-    description: "Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
+    description: "DRAFT — Plain-language leaflet linked by QR code from the regional consent form: benefits, what happens, risks, choices, aftercare and a risk summary table.",
     version: "1.1",
     updated: "2026-10-26",
     href: "leaflets/regional-truncal.html",
-    tags: ["leaflet", "patient information", "nerve block", "regional", "QR"]
+    tags: ["draft", "leaflet", "patient information", "nerve block", "regional", "QR"]
   },
   {
     id: "who-safety-checklist",

@@ -168,6 +168,11 @@
     var f = window.REGIONAL.FORMS[cfg.key];
     var sheet = $("#sheet");
     sheet.innerHTML = build(cfg, f);
+    if (window.REGIONAL.DRAFT) {
+      sheet.classList.add("draft");
+      sheet.insertAdjacentHTML("beforeend", '<div class="watermark" aria-hidden="true">DRAFT</div>');
+      $("#form-version").insertAdjacentHTML("afterend", '<span class="draft-tag">Draft</span>');
+    }
     $("#form-version").textContent = "v" + cfg.version;
     var leafletBtn = $("#btn-leaflet");
     if (leafletBtn) leafletBtn.href = "../leaflets/" + f.leaflet + ".html";

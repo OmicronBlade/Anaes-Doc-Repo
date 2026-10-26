@@ -293,6 +293,9 @@
     pt: "If a thin tube (catheter) is left in for a pain-relief infusion, it can leak, fall out or block. It is usually removed after 2 to 3 days to keep the infection risk low." };
 
   window.REGIONAL = {
+    // While true, every consent form and patient leaflet carries a DRAFT watermark
+    // (on screen and in print). Set to false once the content is approved.
+    DRAFT: true,
     BANDS: BANDS,
     FORM_BANDS: FORM_BANDS,
     GENERAL_RISKS: GENERAL_RISKS,

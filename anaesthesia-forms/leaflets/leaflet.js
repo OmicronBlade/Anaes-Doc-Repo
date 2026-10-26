@@ -109,6 +109,10 @@
     }).join("") + "</ol>" +
     '<p class="ver">Version ' + VERSION + ' · <button type="button" class="print screen-only" onclick="window.print()">Print this leaflet</button></p></footer>';
 
+  if (R.DRAFT) {
+    h = '<p class="draft-banner">DRAFT — not yet approved for patient use</p>' + h;
+    document.body.insertAdjacentHTML("beforeend", '<div class="watermark" aria-hidden="true">DRAFT</div>');
+  }
   document.getElementById("leaflet").innerHTML = h;
   document.title = f.ptTitle + " — Patient information";
 })();

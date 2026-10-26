@@ -158,3 +158,15 @@
 .rc .risks tr.wr td { padding-left: 4.5mm; }
 @media screen { .rc .item.hl { background: rgba(255, 196, 0, 0.22); border-radius: 2px; } }
 @media print { .rc .item.hl { background: none !important; } }
+
+/* ---------- DRAFT watermark (REGIONAL.DRAFT in regional-content.js) ---------- */
+.rc .watermark {
+  position: absolute; left: 50%; top: 50%; z-index: 5; pointer-events: none;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-family: Arial, sans-serif; font-size: 150pt; font-weight: 700; letter-spacing: 0.08em;
+  color: rgba(217, 45, 32, 0.13); white-space: nowrap;
+}
+.draft-tag {
+  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #b42318; background: #fef3f2; border: 1px solid #fecdca; border-radius: 999px; padding: 1px 8px;
+}
