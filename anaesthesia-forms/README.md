@@ -16,6 +16,7 @@ assets/img/                Logos used on forms
 forms/<id>.html|js         One page per document; the .js holds that form's settings
 forms/shared/              Layouts shared by several forms (e.g. the NSH prescription chart)
 forms/pdf/                 Pre-filled PDFs for landing-page quick downloads (tools/build_pdfs.py)
+leaflets/                  Patient information leaflets (linked by QR code from the consent forms)
 .nojekyll                  Tells GitHub Pages to serve files as-is
 ```
 
@@ -56,4 +57,13 @@ Push to GitHub → Settings → Pages → Deploy from branch → `main` / root.
   `.tick` tick boxes, `.circ` circle-the-option choices (`data-group` makes a set single-choice),
   `td.circle-cell` circle-a-table-block, `data-fill-today` / `data-fill-now` buttons, and ruled `.lined` boxes
   (text that no longer fits is outlined red on screen). Fields with `data-link` copy page-1 details until edited by hand.
+- **Regional anaesthesia consent** (`forms/regional-consent-{general,upper-limb,lower-limb,truncal}.*`): one-page A4
+  forms built by `forms/shared/regional-consent.js|css`. **All wording lives in `forms/shared/regional-content.js`** —
+  blocks, benefits, risks (band + frequency), alternatives, aftercare and the patient-leaflet prose. The patient
+  leaflets read the same file, so the form and leaflet always match. Ticking a block highlights (screen only) the
+  benefits and risks that apply to it. Based on SASA/SASRA Guidelines 2016 and McCombe & Bogod, Anaesthesia 2021.
+- **Patient leaflets** (`leaflets/regional-*.html`, `leaflet.js|css`): phone-first pages opened from the QR code on each
+  consent form; they also print on A4. QR codes are SVGs in `assets/img/qr/`, made by `python tools/build_qr.py`
+  (`pip install qrcode`). If the site address changes, update `BASE_URL` there and `LEAFLET_BASE` in
+  `forms/shared/regional-consent.js`, then rerun it.
 - After changing a form that has a quick-download PDF, run `python tools/build_pdfs.py`.
