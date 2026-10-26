@@ -1,0 +1,144 @@
+/*
+ * PCA Prescription — layout measured from the original PDF (A4 portrait).
+ * All positions are in mm from the top-left corner of the sheet.
+ */
+
+.pca { --grey: #757070; }
+.pca .sheet { font-size: 10pt; }
+
+.pca .abs { position: absolute; }
+.pca .txt { position: absolute; white-space: nowrap; line-height: 4.7mm; height: 4.7mm; }
+.pca .h   { position: absolute; white-space: nowrap; line-height: 4.7mm; font-weight: 700; font-size: 11pt; }
+
+.pca .logo { left: 11.5mm; top: 11.8mm; width: 50.5mm; }
+
+.pca .title {
+  left: 0; top: 34.6mm; width: 211mm;
+  text-align: center; white-space: nowrap;
+  font-size: 14pt; font-weight: 700; line-height: 7mm;
+}
+
+/* Heavy rectangles (1.5 pt) */
+.pca .frame { border: 1.5pt solid #000; }
+.pca .vline { width: 0; border-left: 0.5pt solid #000; }
+
+/* ---------- Patient box ---------- */
+.pca .pt-box {
+  left: 90.8mm; top: 6.6mm; width: 111.2mm; height: 24.4mm;
+  border: 0.6pt solid #8a8a8a; border-radius: 4mm;
+}
+.pca .pt-row {
+  position: absolute; left: 3.7mm; width: 97.8mm; height: 4.6mm;
+  display: flex; align-items: flex-end; font-size: 9pt;
+}
+.pca .pt-row span { white-space: nowrap; padding-bottom: 0.1mm; }
+.pca .pt-row input {
+  flex: 1; height: 3.9mm; margin-left: 1mm; padding: 0 0.5mm;
+  font-size: 10.5pt; border-bottom: 1pt dotted #000;
+}
+
+/* ---------- Underlined entry fields ---------- */
+.pca input.ul {
+  position: absolute; height: 4.3mm; padding: 0 0.8mm;
+  border-bottom: 0.5pt solid #000;
+}
+.pca input.c { text-align: center; }
+
+/* Date: __/__/20__ */
+.pca .dt {
+  display: flex; align-items: flex-end; height: 4.7mm;
+  line-height: 4.7mm; white-space: nowrap;
+}
+.pca .dt span { padding-bottom: 0; }
+.pca .dt input {
+  width: 7mm; height: 4.3mm; padding: 0; text-align: center;
+  border-bottom: 0.5pt solid #000;
+}
+.pca .dt input.m { width: 8.8mm; }
+
+/* ---------- Checkboxes (drawn, so ticks print) ---------- */
+.pca .cb {
+  position: absolute; display: flex; align-items: center;
+  height: 4.7mm; white-space: nowrap; cursor: pointer;
+}
+.pca .cb input {
+  position: absolute; opacity: 0; width: 0; height: 0; margin: 0; padding: 0;
+  pointer-events: none;
+}
+.pca .cb .box {
+  position: relative; flex: none;
+  width: 3.1mm; height: 3.1mm; margin: 0 0.6mm 0 0.3mm;
+  border: 0.5pt solid #000; background: #fff;
+}
+.pca .cb input:checked + .box::after {
+  content: ""; position: absolute;
+  left: 0.85mm; top: 0.05mm; width: 0.9mm; height: 1.8mm;
+  border: solid #000; border-width: 0 0.45mm 0.45mm 0;
+  transform: rotate(45deg);
+}
+.pca .cb input:focus-visible + .box { outline: 2px solid #4d8fcc; outline-offset: 1px; }
+@media screen { .pca .cb:hover .box { background: rgba(43, 92, 138, 0.12); } }
+
+/* "Check all" — screen only */
+.pca .check-all, .pca .today {
+  height: 4.7mm; padding: 0 2.2mm;
+  font: inherit; font-size: 8.5pt; line-height: 1;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid transparent; border-radius: 3px; cursor: pointer;
+}
+.pca .check-all:hover, .pca .today:hover { border-color: var(--accent); }
+
+/* ---------- Instructions list ---------- */
+.pca .ilist .ln { position: relative; height: 4.72mm; line-height: 4.72mm; white-space: nowrap; }
+.pca .ilist .ln > * { position: absolute; top: 0; font-style: normal; }
+.pca .ilist .sub { font-family: "Courier New", Courier, monospace; }
+
+/* ---------- PCA drug mixture (Start / Refilled) ---------- */
+.pca .grey { color: var(--grey); }
+.pca .grey .box { border-color: var(--grey); }
+.pca .grey input.ul { border-bottom-color: var(--grey); }
+.pca .grey input { color: #000; }
+.pca .bold, .pca .txt.b { font-weight: 700; }
+
+/* ---------- Orders / administration table ---------- */
+.pca table.chart {
+  left: 12.7mm; top: 180.45mm; width: 184.4mm;
+  border-collapse: collapse; table-layout: fixed;
+}
+.pca .chart td {
+  padding: 0; overflow: hidden; vertical-align: top;
+  border: 0.5pt solid #000;
+  font-size: 10pt; line-height: 4.35mm;
+}
+.pca .chart tr      { height: 4.5mm; }
+.pca .chart tr.hdr  { height: 4.5mm; }
+.pca .chart tr.first, .pca .chart tr.pr4 { height: 4.62mm; }
+.pca .chart tr[id^="pr"] { height: 4.6mm; }
+
+.pca .chart td.tx   { padding: 0.25mm 0 0 2.2mm; white-space: nowrap; }
+.pca .chart .sub    { font-size: 9pt; color: var(--grey); }
+.pca .chart .gap    { margin-top: 3.5mm; }
+
+.pca .chart td.g input {
+  height: 3.8mm; padding: 0; text-align: center; font-size: 9pt;
+}
+.pca .chart td.dh input { font-size: 8.5pt; }
+
+/* heavy rules: 2px prints close to the original's 0.5 mm */
+.pca .chart .tl { border-left:   2px solid #000; }
+.pca .chart .tr { border-right:  2px solid #000; }
+.pca .chart .tt { border-top:    2px solid #000; }
+.pca .chart .tb { border-bottom: 2px solid #000; }
+.pca .chart tr.first > td, .pca .chart tr.hdr > td { border-top: 2px solid #000; }
+.pca .chart tr.hdr > td { border-bottom: 2px solid #000; }
+.pca .chart tr.last > td { border-bottom: 2px solid #000; }
+
+/* Pruritus block: Chlorpheniramine OR Cetirizine / either one alone */
+.pca .chart[data-mode="both"]  tr.pr4 > td { border-top: 2px solid #000; }
+.pca .chart[data-mode="both"]  .lab-chlor, .pca .chart[data-mode="both"]  .lab-cet  { display: none; }
+.pca .chart[data-mode="chlor"] .lab-both,  .pca .chart[data-mode="chlor"] .lab-cet  { display: none; }
+.pca .chart[data-mode="cet"]   .lab-both,  .pca .chart[data-mode="cet"]   .lab-chlor{ display: none; }
+.pca .chart[data-mode="chlor"] td.presB, .pca .chart[data-mode="cet"] td.presA { display: none; }
+
+/* Signature box fields */
+.pca input[name="qualifications"] { padding: 0; }

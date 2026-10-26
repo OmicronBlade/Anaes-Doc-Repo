@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light only">
+  <meta name="robots" content="noindex">
+  <title>PCA Prescription</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b5c8a'/%3E%3Cpath d='M9 10h14M9 16h14M9 22h9' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/form.css">
+  <link rel="stylesheet" href="pca-prescription.css">
+</head>
+<body class="form-page">
+
+  <!-- Toolbar: screen only, never printed -->
+  <header class="form-toolbar screen-only">
+    <div class="inner">
+      <a class="back-link" href="../index.html">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
+        All forms
+      </a>
+      <div class="form-title">
+        <h1>PCA Prescription</h1>
+        <span class="version-tag" id="form-version"></span>
+      </div>
+      <div class="toolbar-spacer"></div>
+      <span class="save-status" id="save-status" aria-live="polite"></span>
+      <button type="button" class="btn btn-quiet" id="btn-clear">Clear</button>
+      <button type="button" class="btn btn-primary" id="btn-print">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6V2h8v4M4 12H2.5V6.5h11V12H12M4 9.5h8V14H4z"/></svg>
+        Print / Save PDF
+      </button>
+    </div>
+
+    <div class="options">
+      <div class="opt-group" role="group" aria-label="PCA drug presets">
+        <span class="opt-label">PCA drugs</span>
+        <button type="button" class="btn" data-preset="morph-ond" title="Tick Morphine and Ondansetron">Morphine + Ondansetron</button>
+        <button type="button" class="btn" data-preset="fent-ond" title="Tick Fentanyl and Ondansetron; Fentanyl 20 mcg/ml">Fentanyl + Ondansetron</button>
+        <button type="button" class="btn" data-preset="morph-ket" title="Tick Morphine, Ketamine and Ondansetron">Morphine + Ketamine</button>
+      </div>
+      <div class="opt-group" role="group" aria-label="Pruritus drug">
+        <span class="opt-label">Pruritus drug</span>
+        <div class="seg">
+          <button type="button" data-mode="both" aria-pressed="true" title="Chlorpheniramine OR Cetirizine (circle one)">Either</button>
+          <button type="button" data-mode="chlor" aria-pressed="false">Chlorpheniramine</button>
+          <button type="button" data-mode="cet" aria-pressed="false">Cetirizine</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <form id="form" class="sheets pca" autocomplete="off" onsubmit="return false">
+    <input type="text" name="pruritus_mode" value="both" hidden aria-hidden="true" tabindex="-1">
+
+    <section class="sheet" aria-label="PCA Prescription">
+
+      <!-- ===== Header ===== -->
+      <img class="abs logo" src="../assets/img/wcg-logo.jpg" alt="Western Cape Government">
+
+      <div class="abs pt-box">
+        <label class="pt-row" style="top:2.2mm"><span>Name:</span><input name="pt_name"></label>
+        <label class="pt-row" style="top:9.2mm"><span>Folder Number:</span><input name="pt_folder"></label>
+        <label class="pt-row" style="top:16.3mm"><span>Date of Birth:</span><input name="pt_dob"></label>
+      </div>
+
+      <div class="abs title">NEW SOMERSET HOSPITAL – PCA Prescription</div>
+
+      <!-- ===== General ===== -->
+      <div class="abs frame" style="left:9.8mm;top:40.7mm;width:190mm;height:20.4mm"></div>
+      <div class="abs h" style="left:12.7mm;top:41.3mm">General</div>
+
+      <button type="button" class="abs today screen-only" data-today="date" style="left:148mm;top:41.7mm">Today</button>
+      <div class="abs dt" style="left:160.6mm;top:41.7mm">
+        <input name="date_d" maxlength="2" inputmode="numeric" aria-label="Day"><span>/</span><input class="m" name="date_m" maxlength="2" inputmode="numeric" aria-label="Month"><span>/20</span><input name="date_y" maxlength="2" inputmode="numeric" aria-label="Year">
+      </div>
+
+      <div class="abs txt" style="left:12.7mm;top:46.5mm">Weight:</div>
+      <input class="abs ul c" name="weight" inputmode="decimal" aria-label="Weight" style="left:24.8mm;top:46.2mm;width:13.3mm">
+      <div class="abs txt" style="left:38.3mm;top:46.5mm">kg</div>
+
+      <div class="abs txt" style="left:63.5mm;top:46.5mm">eGFR:</div>
+      <input class="abs ul c" name="egfr" inputmode="decimal" aria-label="eGFR" style="left:72.8mm;top:46.2mm;width:16.1mm">
+      <div class="abs txt" style="left:89.1mm;top:46.5mm">mL/min/1.73m²</div>
+
+      <div class="abs txt" style="left:127mm;top:46.5mm">Allergies:</div>
+      <input class="abs ul" name="allergies" aria-label="Allergies" style="left:141mm;top:46.2mm;width:49.5mm">
+
+      <div class="abs txt" style="left:12.7mm;top:54mm">Any deviations from this standard treatment, are to be prescribed on the patient’s prescription treatment chart.</div>
+
+      <!-- ===== Checklist ===== -->
+      <div class="abs h" style="left:12.7mm;top:61.3mm">Checklist</div>
+      <button type="button" class="abs check-all screen-only" id="btn-checkall" style="left:30.5mm;top:61.5mm">Check all</button>
+
+      <label class="abs cb" style="left:12.7mm;top:67mm"><input type="checkbox" name="chk_indication" data-check><span class="box"></span>Appropriate Indication</label>
+      <label class="abs cb" style="left:88.9mm;top:67mm"><input type="checkbox" name="chk_line" data-check><span class="box"></span>Dedicated Line (Exclusive)</label>
+      <label class="abs cb" style="left:12.7mm;top:72.1mm"><input type="checkbox" name="chk_understand" data-check><span class="box"></span>Patient able to understand and utilise</label>
+      <label class="abs cb" style="left:88.9mm;top:72.1mm"><input type="checkbox" name="chk_multimodal" data-check><span class="box"></span>Multi-modal/Synergistic analgesia (Prescribed)</label>
+
+      <!-- ===== Instructions ===== -->
+      <div class="abs frame" style="left:9.8mm;top:79.4mm;width:190mm;height:39.7mm"></div>
+      <div class="abs h" style="left:12.7mm;top:79.5mm">Instructions</div>
+      <div class="abs ilist" style="left:0;top:85mm;width:210mm">
+        <div class="ln"><i class="bul" style="left:19mm">•</i><span style="left:25.4mm">Record observations according to Clinical Practice Guidelines</span></div>
+        <div class="ln"><i class="bul" style="left:19mm">•</i><span style="left:25.4mm">Assess for pain and potential opioid related side-effects</span></div>
+        <div class="ln"><i class="bul" style="left:19mm">•</i><span style="left:25.4mm">Treatment of Side-Effects:</span></div>
+        <div class="ln"><i class="sub" style="left:31.7mm">o</i><span style="left:38.1mm">Nausea &amp; Vomiting: Give antiemetic as prescribed</span></div>
+        <div class="ln"><i class="sub" style="left:31.7mm">o</i><span style="left:38.1mm">Itching: Antihistamine as prescribed</span></div>
+        <div class="ln"><i class="sub" style="left:31.7mm">o</i><span style="left:38.1mm">Respiratory depression (RR &lt; 8): Call Doctor AND</span></div>
+        <div class="ln"><span style="left:38.1mm"><b>Administer Oxygen</b> (Nasal Prongs or Face Mask) and Give Naloxone as prescribed</span></div>
+      </div>
+
+      <!-- ===== PCA ===== -->
+      <div class="abs h" style="left:12.7mm;top:120.5mm">PCA</div>
+      <div class="abs txt" style="left:12.7mm;top:125.8mm">Lock Out (1 ml)</div>
+      <input class="abs c" name="lockout" value="8" inputmode="numeric" aria-label="Lock out minutes" style="left:50.8mm;top:125.8mm;width:6mm;height:4.7mm;padding:0">
+      <div class="abs txt" style="left:57mm;top:125.8mm">min</div>
+      <input class="abs ul c" name="lockout_other" inputmode="numeric" aria-label="Lock out minutes (other)" style="left:66mm;top:125.6mm;width:10mm">
+      <div class="abs txt" style="left:76.6mm;top:125.8mm">min</div>
+
+      <div class="abs vline" style="left:104.2mm;top:133.5mm;height:39.4mm"></div>
+      <div id="pca-drugs"></div>
+
+      <!-- ===== Orders and administration ===== -->
+      <div class="abs txt" style="left:134.7mm;top:175.5mm">Date →</div>
+      <table class="abs chart" id="chart"></table>
+
+      <!-- ===== Signature ===== -->
+      <div class="abs frame" style="left:110.1mm;top:251.5mm;width:89.7mm;height:29.1mm"></div>
+      <div class="abs txt" style="left:114.3mm;top:254.3mm">Signature:</div>
+      <div class="abs txt" style="left:114.3mm;top:263.6mm">Surname:</div>
+      <input class="abs ul" name="surname" aria-label="Surname" style="left:139.7mm;top:263.6mm;width:50mm">
+      <div class="abs txt" style="left:114.3mm;top:268.3mm">MP number:</div>
+      <input class="abs ul" name="mp_number" aria-label="MP number" style="left:139.7mm;top:268.3mm;width:50mm">
+      <div class="abs txt" style="left:114.3mm;top:272.9mm">Qualifications:</div>
+      <input class="abs" name="qualifications" value="MBChB" aria-label="Qualifications" style="left:139.7mm;top:272.9mm;width:50mm;height:4.7mm">
+    </section>
+
+  </form>
+
+  <script src="../assets/js/form.js"></script>
+  <script src="pca-prescription.js"></script>
+</body>
+</html>

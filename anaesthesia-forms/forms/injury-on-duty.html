@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light only">
+  <meta name="robots" content="noindex">
+  <title>Injury on Duty</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b5c8a'/%3E%3Cpath d='M9 10h14M9 16h14M9 22h9' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/form.css">
+  <link rel="stylesheet" href="shared/nhls-request.css">
+  <link rel="stylesheet" href="injury-on-duty.css">
+</head>
+<body class="form-page">
+
+  <!-- Icons used on the checklist pages -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-star" viewBox="0 0 40 40">
+      <polygon fill="#ffd200" stroke="#d97706" stroke-width="1.6" stroke-linejoin="round"
+        points="20,1 23.5,11 32,5 29,15 39,15 31,21.5 38.5,29 28.5,28 29.5,38.5 21.5,31.5 16,39.5 14.5,29.5 5,34 9.5,25 1,21 10,17 4,9 13.5,11.5 13,2 18,10"/>
+    </symbol>
+    <symbol id="i-hourglass" viewBox="0 0 24 32">
+      <path d="M2 2h20M2 30h20" stroke="#000" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M4 3h16L12 15.5z" fill="#d62828"/>
+      <path d="M4 29h16L12 16.5z" fill="#d62828"/>
+    </symbol>
+  </svg>
+
+  <!-- Toolbar: screen only, never printed -->
+  <header class="form-toolbar screen-only">
+    <div class="inner">
+      <a class="back-link" href="../index.html">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
+        All forms
+      </a>
+      <div class="form-title">
+        <h1>Injury on Duty</h1>
+        <span class="version-tag" id="form-version"></span>
+      </div>
+      <div class="toolbar-spacer"></div>
+      <span class="save-status" id="save-status" aria-live="polite"></span>
+      <button type="button" class="btn btn-quiet" id="btn-clear">Clear</button>
+      <button type="button" class="btn btn-primary" id="btn-print">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6V2h8v4M4 12H2.5V6.5h11V12H12M4 9.5h8V14H4z"/></svg>
+        Print / Save PDF
+      </button>
+    </div>
+  </header>
+
+  <form id="form" class="sheets iod" autocomplete="off" onsubmit="return false">
+
+    <!-- =================================================================
+         PAGE 1 — Staff Injury Report Form
+         ================================================================= -->
+    <section class="sheet" aria-label="Staff Injury Report Form">
+      <header class="lh">
+        <img class="lh-logo" src="../assets/img/wcg-logo.jpg" alt="Western Cape Government">
+        <div class="lh-right">
+          <div class="lh-hosp">New Somerset Hospital</div>
+          <img class="lh-crest" src="../assets/img/nsh-crest.jpg" alt="">
+          <div class="lh-dept">Serving the Community<br>Department: Occupational Health &amp; Safety</div>
+        </div>
+      </header>
+      <div class="lh-rule"></div>
+
+      <h1 class="doc-title">EMERGENCY CARE OF OCCUPATIONAL EXPOSURE TO<br>POTENTIALLY INFECTIOUS BODILY FLUIDS<sup>1</sup></h1>
+      <h2 class="doc-sub">Staff Injury Report Form</h2>
+
+      <h3 class="sec">Exposed healthcare worker’s details</h3>
+      <div class="two">
+        <div class="idbox">
+          <label class="field"><span class="lbl">Surname</span><input class="ln" name="hcw_surname"></label>
+          <label class="field"><span class="lbl">Name</span><input class="ln" name="hcw_name"></label>
+          <label class="field"><span class="lbl">Folder number</span><input class="ln" name="hcw_folder"></label>
+          <label class="field"><span class="lbl">DOB</span><input class="ln" name="hcw_dob"></label>
+        </div>
+        <div class="kv">
+          <div class="field"><span class="lbl">Date seen:</span><input class="ln" name="hcw_date_seen" aria-label="Date seen"><button type="button" class="mini-btn screen-only" data-fill-today="hcw_date_seen">Today</button></div>
+          <div class="field"><span class="lbl">Time seen:</span><input class="ln" name="hcw_time_seen" aria-label="Time seen"><button type="button" class="mini-btn screen-only" data-fill-now="hcw_time_seen">Now</button></div>
+          <label class="field"><span class="lbl">Attending clinician:</span><input class="ln" name="hcw_clinician"></label>
+          <div class="field"><span class="lbl">Date of injury:</span><input class="ln" name="hcw_inj_date" aria-label="Date of injury"><button type="button" class="mini-btn screen-only" data-fill-today="hcw_inj_date">Today</button></div>
+          <div class="field"><span class="lbl">Time of injury:</span><input class="ln" name="hcw_inj_time" aria-label="Time of injury"><button type="button" class="mini-btn screen-only" data-fill-now="hcw_inj_time">Now</button></div>
+        </div>
+      </div>
+
+      <div class="gap"></div>
+      <label class="q"><span class="lbl">In which department do you work?</span><input class="ln" name="hcw_dept"></label>
+      <label class="q"><span class="lbl">What is your position? <span class="hint">(e.g. registrar, student nurse, PN, general worker etc.)</span></span><input class="ln" name="hcw_position"></label>
+      <label class="q"><span class="lbl">Which institution employs you?<br><span class="hint">(if you are a registrar – e.g. GSH, RXH, NSH; if you are a student – UCT, UWC, Stell, CPUT etc.)</span></span><input class="ln" name="hcw_institution"></label>
+
+      <div class="q">
+        <span class="lbl">Type of injury <span class="hint">(circle)</span>:
+          <span class="opts" style="margin-left:3mm">
+            <label class="circ"><input type="checkbox" name="inj_sharp"><span>Sharp</span></label>/
+            <label class="circ"><input type="checkbox" name="inj_bite"><span>Human bite</span></label>/
+            <label class="circ"><input type="checkbox" name="inj_scratch"><span>Scratch</span></label>/
+            <label class="circ"><input type="checkbox" name="inj_splash"><span>Splash</span></label>
+          </span>
+        </span>
+        <label class="field"><span class="lbl hint">Specify item (e.g. needle, blade) and whether it was contaminated with body fluid:</span><input class="ln" name="inj_item"></label>
+      </div>
+
+      <div class="q">
+        <span class="lbl">How and where did the injury happen? Describe the incident and the injury.</span>
+        <div class="lined" data-rows="4"><textarea name="inj_how" aria-label="How and where did the injury happen"></textarea></div>
+      </div>
+      <div class="q">
+        <span class="lbl">What action did you take after the injury occurred?</span>
+        <div class="lined" data-rows="2"><textarea name="inj_action" aria-label="Action taken after the injury"></textarea></div>
+      </div>
+      <label class="field q"><span class="lbl">Other staff present:</span><input class="ln" name="inj_staff"></label>
+
+      <h3 class="sec" style="margin-top:4mm">Source patient details</h3>
+      <div class="two">
+        <div>
+          <div class="tab">SOURCE CASE STICKER</div>
+          <div class="idbox">
+            <label class="field"><span class="lbl">Surname</span><input class="ln" name="src_surname"></label>
+            <label class="field"><span class="lbl">Name</span><input class="ln" name="src_name"></label>
+            <label class="field"><span class="lbl">Folder number</span><input class="ln" name="src_folder"></label>
+            <label class="field"><span class="lbl">DOB</span><input class="ln" name="src_dob"></label>
+          </div>
+        </div>
+        <div class="kv" style="padding-top:8mm">
+          <label class="field"><span class="lbl">Ward:</span><input class="ln" name="src_ward"></label>
+        </div>
+      </div>
+
+      <div class="fn fn-bottom" style="width:60mm"><p><sup>1</sup> Use this in conjunction with the Occupational PEP policy document for NSH.</p></div>
+      <div class="pfoot"><span>PEP for NSH:</span> updated June 2024</div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 2 — Consent
+         ================================================================= -->
+    <section class="sheet" aria-label="Consent form">
+      <h1 class="doc-title" style="margin-bottom:6mm">CONSENT FORM FOR OCCUPATIONAL HEALTH ASSESSMENTS</h1>
+
+      <h3 class="sec">Section A – Reason for referral <span class="aside">(please tick as appropriate)</span></h3>
+      <table class="t reasons">
+        <colgroup><col style="width:9mm"><col><col style="width:13mm"></colgroup>
+        <tr><td class="c m">1.</td><td class="m">Medical surveillance</td><td class="c m"><label class="tick"><input type="checkbox" name="ref_1" aria-label="Medical surveillance"><span class="box"></span></label></td></tr>
+        <tr><td class="c m">2.</td><td class="m">Fitness certification</td><td class="c m"><label class="tick"><input type="checkbox" name="ref_2" aria-label="Fitness certification"><span class="box"></span></label></td></tr>
+        <tr><td class="c m">3.</td><td class="m">Fitness-to-work / return-to-work fitness assessment</td><td class="c m"><label class="tick"><input type="checkbox" name="ref_3" aria-label="Fitness to work"><span class="box"></span></label></td></tr>
+        <tr><td class="c m">4.</td><td class="m">Incapacity management</td><td class="c m"><label class="tick"><input type="checkbox" name="ref_4" aria-label="Incapacity management"><span class="box"></span></label></td></tr>
+        <tr><td class="c m">5.</td><td class="m">Occupational injury</td><td class="c m"><label class="tick"><input type="checkbox" name="ref_5" aria-label="Occupational injury"><span class="box"></span></label></td></tr>
+        <tr><td class="c m">6.</td><td class="m">Occupational disease (e.g. TB, COVID-19, occupational asthma or dermatitis)</td><td class="c m"><label class="tick"><input type="checkbox" name="ref_6" aria-label="Occupational disease"><span class="box"></span></label></td></tr>
+        <tr><td class="c m">7.</td><td class="m">Occupational exposure incident (e.g. needlestick, sharps or splash injury)</td><td class="c m"><label class="tick"><input type="checkbox" name="ref_7" aria-label="Occupational exposure incident"><span class="box"></span></label></td></tr>
+        <tr><td class="c m">8.</td><td class="m"><div class="field" style="min-height:0"><span class="lbl">Other (please state):</span><input class="ln" name="ref_other_text"></div></td><td class="c m"><label class="tick"><input type="checkbox" name="ref_8" aria-label="Other"><span class="box"></span></label></td></tr>
+      </table>
+
+      <h3 class="sec" style="margin-top:7mm">Section B – Employee’s details</h3>
+      <div class="idbox" style="width:110mm;border-radius:0">
+        <div style="text-align:center;font-weight:700;font-size:11.5pt">EMPLOYEE LABEL</div>
+        <div style="font-style:italic;margin-bottom:1mm">If unavailable, complete in writing:</div>
+        <label class="field"><span class="lbl" style="width:32mm">Name &amp; surname:</span><input class="ln" name="emp_name" data-link="hcw_name hcw_surname"></label>
+        <label class="field"><span class="lbl" style="width:32mm">DOB:</span><input class="ln" name="emp_dob" data-link="hcw_dob"></label>
+        <label class="field"><span class="lbl" style="width:32mm">Contact number:</span><input class="ln" name="emp_contact" inputmode="tel"></label>
+        <label class="field"><span class="lbl" style="width:32mm">Folder number:</span><input class="ln" name="emp_folder" data-link="hcw_folder"></label>
+      </div>
+
+      <h3 class="sec" style="margin-top:7mm">Section C – Employee’s consent</h3>
+      <p><b>The occupational health service routinely captures data on all persons attending this clinic. The purpose of this data collection is for monitoring and evaluation, quality improvement and statutory reporting. Occasionally, this data may be used for research purposes. All data are kept strictly confidential within the occupational health service. Only relevant data are shared with management and legal authorities; and as far as possible, data are anonymised.</b></p>
+      <p><b>I hereby confirm that the purpose of data collection has been explained to me and I consent to its use for the prescribed purpose. I understand that only in rare circumstances, individual or group information may have to be released without my consent, e.g. if the safety of others may be at risk or if required by law.</b></p>
+
+      <div style="width:110mm;margin-top:14mm">
+        <div class="field" style="margin-bottom:5mm"><span class="lbl" style="width:38mm;font-weight:700">Employee signature:</span><span class="sigline" title="Employee signature (sign by hand)"></span></div>
+        <div class="field" style="margin-bottom:5mm"><span class="lbl" style="width:38mm;font-weight:700">HCW signature:</span><span class="sigline" title="HCW signature (sign by hand)"></span></div>
+        <div class="field"><span class="lbl" style="width:38mm;font-weight:700">Date:</span><input class="ln" name="consent_date" aria-label="Consent date"><button type="button" class="mini-btn screen-only" data-fill-today="consent_date">Today</button></div>
+      </div>
+
+      <div class="pfoot"><span>PEP for NSH:</span> updated June 2024</div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 3 — Checklist for initial attending clinician
+         ================================================================= -->
+    <section class="sheet p-check" aria-label="Checklist for initial attending clinician">
+      <h3 class="sec">Checklist for initial attending clinician (OHS, EC or NBC) <span class="aside">(tick what you have done)</span></h3>
+
+      <ul class="cl">
+        <li><label class="tick"><input type="checkbox" name="cl_rinse"><span class="box"></span><span class="t">Check that the exposed area has been thoroughly rinsed / irrigated. <b><i>Assess if infectious / non-infectious.</i></b><svg class="ico"><use href="#i-star"/></svg></span></label></li>
+
+        <li class="gap"><label class="tick"><input type="checkbox" name="cl_noninf"><span class="box"></span><span class="t"><u>IF NON-INFECTIOUS EXPOSURE OR INTACT SKIN:</u>*</span></label>
+          <ul class="sub">
+            <li>PEP is not indicated, no need for bloods or follow-up at OHS</li>
+            <li>Only complete COIDA First Medical Report form and report the incident to the matron</li>
+          </ul>
+        </li>
+
+        <li class="gap"><label class="tick"><input type="checkbox" name="cl_inf"><span class="box"></span><span class="t"><u>IF INFECTIOUS EXPOSURE:</u></span></label>
+          <ul class="sub">
+            <li>Give the HCW the first dose of ARVs and the starter pack (unless he/she is <i>known</i> to be HIV infected)
+              <ul class="sub">
+                <li>Give <i>within 1–2 hours of exposure</i>. Definitely &lt; 8 hrs. NO benefit &gt; 72 hrs.</li>
+                <li><div class="sidebox">Available at<br>MATRON’s office</div>
+                  <div class="field" style="min-height:5.6mm;margin-right:31mm"><span class="lbl">Time and date given:</span><input class="ln" name="arv_given"></div>
+                  <div class="field" style="min-height:5.6mm;margin-right:31mm"><span class="lbl">Name + signature:</span><input class="ln" name="arv_by"></div>
+                  <ul class="sub sq" style="clear:both;margin-left:2mm">
+                    <li>Starter pack contains a 7-day supply of:
+                      <ul class="sub none">
+                        <li><label class="tick"><input type="checkbox" name="arv_pack"><span class="box"></span><span class="t">Tenofovir 300 mg + Lamivudine 300 mg + Dolutegravir 50 mg as fixed-dose combination, 1 tablet once daily PO</span></label></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><b>Has the HCW been immunised against Hep B</b> (i.e. received minimum 3 vaccines)? (<i>circle</i>)<svg class="ico sm"><use href="#i-hourglass"/></svg>
+              <ul class="sub">
+                <li class="opts">
+                  <label class="circ"><input type="checkbox" name="hbv_fully" data-group="hbv"><span>Yes, fully</span></label>
+                  <label class="circ"><input type="checkbox" name="hbv_partial" data-group="hbv"><span>Yes, partially</span></label>
+                  <label class="circ"><input type="checkbox" name="hbv_no" data-group="hbv"><span>No</span></label>
+                  <label class="circ"><input type="checkbox" name="hbv_unknown" data-group="hbv"><span>Unknown</span></label>
+                </li>
+                <li><div class="field" style="min-height:5.6mm"><span class="lbl">If yes – date of last booster vaccine or antibody titre check:</span><input class="ln" name="hbv_last" style="max-width:40mm"></div></li>
+                <li>Assess need for HepB prophylaxis (see <b>table 2</b>) and administer vaccine/IG if required.</li>
+              </ul>
+            </li>
+            <li>Ask about pregnancy/lactation/other medication/conditions which might alter PEP choices
+              <ul class="sub">
+                <li>Counsel about risks and OHS procedure and give information leaflet or policy document.</li>
+                <li>Advise on the need to practise safe sex for the next 3 months.</li>
+              </ul>
+            </li>
+            <li>Complete forms:
+              <ul class="sub">
+                <li>Attending clinician to complete: COIDA First Medical Report + this checklist</li>
+                <li>Staff member/student to complete: Staff injury report form and consent form</li>
+              </ul>
+            </li>
+            <li>Bloods: clinician/phlebotomist take bloods from the <b>HCW/student</b> using <b>STAFF lab request form A</b>
+              <ul class="sub">
+                <li>Ensure that bloods have been done on the <b>source patient</b> by the phlebotomist/managing team using <b>SOURCE lab request form B</b>.</li>
+              </ul>
+            </li>
+            <li>Give FOLLOW-UP instructions:
+              <ul class="sub">
+                <li>Staff members and elective students must report to the OHS nurse the following Monday.</li>
+                <li>Students and contract workers must report to the OHS service at their training institution/employer’s health provider within 3–7 days.</li>
+              </ul>
+            </li>
+            <li>Inform the matron-on-duty of the incident</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3 class="sec" style="margin-top:5mm">Deciding on PEP interventions</h3>
+      <table class="t" style="margin-top:1mm">
+        <colgroup><col><col style="width:22mm"><col style="width:22mm"><col style="width:22mm"></colgroup>
+        <tr><th rowspan="2" style="vertical-align:bottom;background:none;border-top:0;border-left:0"><svg class="ico"><use href="#i-star"/></svg> 1. HIV prophylaxis</th><th class="c" colspan="3">Status of the source</th></tr>
+        <tr><th class="c">HIV positive</th><th class="c">Unknown<sup>1</sup></th><th class="c">HIV negative<sup>2</sup></th></tr>
+        <tr><td>Intact skin *</td><td class="c">No PEP</td><td class="c">No PEP</td><td class="c">No PEP</td></tr>
+        <tr><td>Splash or percutaneous injury</td><td class="c"><b>3 drugs</b></td><td class="c"><b>3 drugs</b></td><td class="c">No PEP</td></tr>
+        <tr><td>Percutaneous injury, mucosal splash or non-intact skin exposure to <b><i>non</i></b>-infectious bodily fluids *</td><td class="c m">No PEP</td><td class="c m">No PEP</td><td class="c m">No PEP</td></tr>
+      </table>
+      <div class="note" style="margin-top:1.2mm">
+        <p style="margin:0 0 0.6mm"><sup>1</sup> If subsequent testing reveals the source to be HIV negative, PEP can be stopped. In the event of the source HIV status remaining unknown, the full 28-day course of PEP should be completed.</p>
+        <p style="margin:0"><sup>2</sup> <u>Only if confirmed on formal HIV ELISA result &amp; the source patient is <b>not</b> high risk on questioning.</u></p>
+      </div>
+
+      <p style="margin-top:3mm"><i>Potentially HIV-infectious bodily fluids:</i> Blood, CSF, Semen, Vaginal secretions, Synovial fluid, Pleural fluid, Pericardial fluid, Ascitic fluid, Amniotic fluid, Wound secretions, Breast milk, Human bite</p>
+      <p><i>* Non HIV-infectious bodily fluids:</i> Sweat, Tears, Saliva (BUT if <u>a human bite wound</u> has punctured the skin, PEP should be given), Sputum, Urine, Stool, Vomitus</p>
+
+      <div class="pfoot"><span>PEP for NSH:</span> updated June 2024</div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 4 — Hepatitis B prophylaxis & blood tests
+         ================================================================= -->
+    <section class="sheet p-hepb" aria-label="Hepatitis B prophylaxis and blood tests">
+      <h3 class="sec">2. Hepatitis B prophylaxis – circle block that is applicable<svg class="ico sm" style="margin-right:auto;margin-left:2mm"><use href="#i-hourglass"/></svg></h3>
+
+      <table class="t hepb">
+        <colgroup><col style="width:33mm"><col><col style="width:43mm"></colgroup>
+        <tr><th style="background:none;border-top:0;border-left:0"></th><th class="c" colspan="2">SOURCE CASE RESULT</th></tr>
+        <tr><th class="c">HCW</th><th class="c">HepBsAg positive or unknown</th><th class="c">HepBsAg negative</th></tr>
+        <tr>
+          <td class="rowh">Not vaccinated</td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_1_pos" data-group="hepb" aria-label="Not vaccinated, source positive or unknown">Do HepBsAg<br>HepB <b>immunoglobulin</b><sup>2</sup> within 72 h* (500 iu or 0.06 ml/kg) and repeat in 1 month <i>plus</i><br>HepB <b>vaccination</b><sup>3</sup> 1<sup>st</sup> dose with repeat doses at month&nbsp;1&#8209;2&#8209;6</td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_1_neg" data-group="hepb" aria-label="Not vaccinated, source negative">HepB vaccination<sup>3</sup> 1<sup>st</sup> dose with repeat doses at month&nbsp;1&#8209;2&#8209;6</td>
+        </tr>
+        <tr>
+          <td class="rowh">Vaccinated with known good vaccine response</td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_2_pos" data-group="hepb" aria-label="Good response, source positive or unknown">Nil</td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_2_neg" data-group="hepb" aria-label="Good response, source negative">Nil</td>
+        </tr>
+        <tr>
+          <td class="rowh">Partially vaccinated</td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_3_pos" data-group="hepb" aria-label="Partially vaccinated, source positive or unknown">Do HepBsAg<br>HepB <b>immunoglobulin</b><sup>2</sup> within 72 h* (500 iu or 0.06&nbsp;ml/kg)&nbsp;<i>plus</i><br>HepB <b>vaccination</b><sup>3</sup> stat then complete vaccine course</td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_3_neg" data-group="hepb" aria-label="Partially vaccinated, source negative">HepB vaccination<sup>3</sup> stat then complete vaccine course</td>
+        </tr>
+        <tr>
+          <td class="rowh">Vaccinated with unknown or poor vaccine response<br><small>(HepBsAb titre &lt; 10)</small></td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_4_pos" data-group="hepb" aria-label="Poor response, source positive or unknown">Do HepBsAg<br>HepB <b>immunoglobulin</b><sup>2</sup> within 72 h* (500 iu or 0.06 ml/kg) and repeat in 1 month <i>plus</i><br>HepB <b>vaccination</b><sup>3</sup> 1<sup>st</sup> dose with repeat doses at month&nbsp;1&#8209;2&#8209;6</td>
+          <td class="circle-cell"><input type="checkbox" name="hepb_4_neg" data-group="hepb" aria-label="Poor response, source negative">HepB vaccination<sup>3</sup> 1<sup>st</sup> dose with repeat doses at month&nbsp;1&#8209;2&#8209;6</td>
+        </tr>
+      </table>
+
+      <table class="t given" style="margin-top:3mm">
+        <colgroup><col style="width:20mm"><col><col><col><col><col style="width:5mm"><col><col><col><col></colgroup>
+        <tr><th style="background:none;border-top:0;border-left:0"></th><th colspan="4">HepB immunoglobulin given</th><th class="sp"></th><th colspan="4">HepB vaccine given</th></tr>
+        <tbody id="given-body"></tbody>
+      </table>
+
+      <h3 class="sec">Blood tests to be done on HCW</h3>
+      <table class="t">
+        <colgroup><col style="width:70mm"><col style="width:26mm"><col></colgroup>
+        <tr><th>Test <span class="note" style="font-weight:400">(see lab form <b>A</b> attached)</span></th><th>Date taken</th><th>Result</th></tr>
+        <tbody id="hcw-bloods"></tbody>
+      </table>
+
+      <h3 class="sec"><span>Blood tests<sup>4</sup> to be done and information needed on the SOURCE patient</span></h3>
+      <table class="t">
+        <colgroup><col style="width:70mm"><col style="width:26mm"><col></colgroup>
+        <tr><th>Test <span class="note" style="font-weight:400">(see lab form <b>B</b> attached)</span></th><th>Date taken</th><th>Result</th></tr>
+        <tbody id="src-bloods"></tbody>
+        <tr><td colspan="3" style="font-weight:700;background:#f6f7f9">If patient is on HAART:</td></tr>
+        <tbody id="src-haart"></tbody>
+      </table>
+
+      <div class="fn fn-bottom">
+        <p><sup>2</sup> Available in Emergency drug cupboard fridge. HBIG 200 iU/2 ml. Adult dose: 500 iU IMI (5 ml). Paediatric dose 0.06 ml/kg IMI.<br>
+          &nbsp;&nbsp;* Give within 72 hours if HCW’s HepBsAg is negative and at risk of possibly contracting Hepatitis B from source.</p>
+        <p><sup>3</sup> Available in Emergency drug cupboard fridge. Hepatitis B vaccine 20 mcg/ml. Dose 1 ml IMI.</p>
+        <p><sup>4</sup> With informed consent (or superintendent consent as required).</p>
+      </div>
+      <div class="pfoot"><span>PEP for NSH:</span> updated June 2024</div>
+    </section>
+
+    <!-- =================================================================
+         PAGE 5 — Follow-up care
+         ================================================================= -->
+    <section class="sheet" aria-label="Follow-up care">
+      <h1 class="doc-title" style="margin-bottom:5mm">FOLLOW-UP CARE OF OCCUPATIONAL EXPOSURE TO<br>POTENTIALLY INFECTIOUS BODILY FLUIDS</h1>
+      <div id="followup"></div>
+      <div class="pfoot"><span>PEP for NSH:</span> updated June 2024</div>
+    </section>
+
+    <!-- =================================================================
+         PAGES 6–7 — NHLS request forms (built by shared/nhls-request.js)
+         ================================================================= -->
+    <section class="sheet" data-nhls="A" aria-label="NHLS request form A – staff member"></section>
+    <section class="sheet" data-nhls="B" aria-label="NHLS request form B – source case"></section>
+
+    <!-- =================================================================
+         PAGE 8 — COIDA W.Cl.4 First Medical Report
+         ================================================================= -->
+    <section class="sheet wcl" aria-label="First Medical Report (W.Cl.4)">
+      <div class="wcl-code">W.Cl.4</div>
+      <img class="wcl-logo" src="../assets/img/dol-labour.png" alt="Department of Labour, Republic of South Africa">
+
+      <div class="wcl-claim"><label class="field"><span class="lbl">Claim Number:</span><input class="ln" name="wcl_claim"></label></div>
+
+      <h1>FIRST MEDICAL REPORT IN RESPECT OF AN ACCIDENT</h1>
+      <h2>COMPENSATION FOR OCCUPATIONAL INJURIES AND DISEASES ACT, 1993 (Act No. 130 OF 1993)</h2>
+      <div class="ref">[Section 6A(b) – Commissioner's rules, forms and particulars – Annexure 15]</div>
+
+      <div class="blk">
+        <label class="field"><span class="lbl">Names and Surname of employee</span><input class="ln" name="wcl_name" data-link="hcw_name hcw_surname"></label>
+        <div class="row">
+          <label class="field"><span class="lbl">Identity Number</span><input class="ln" name="wcl_id"></label>
+          <label class="field"><span class="lbl">Address:</span><input class="ln" name="wcl_addr1"></label>
+        </div>
+        <div class="row">
+          <input class="ln" name="wcl_addr2" aria-label="Employee address line 2" style="flex:1">
+          <label class="field w-sm" style="width:46mm"><span class="lbl">Postal Code</span><input class="ln" name="wcl_postal"></label>
+        </div>
+        <label class="field"><span class="lbl">Name of employer</span><input class="ln" name="wcl_employer"></label>
+        <label class="field"><span class="lbl">Address</span><input class="ln" name="wcl_emp_addr1"></label>
+        <div class="row">
+          <input class="ln" name="wcl_emp_addr2" aria-label="Employer address line 2" style="flex:1">
+          <label class="field w-sm" style="width:46mm"><span class="lbl">Postal Code</span><input class="ln" name="wcl_emp_postal"></label>
+        </div>
+        <label class="field"><span class="lbl">Date of accident</span><input class="ln" name="wcl_date_accident" data-link="hcw_inj_date"></label>
+      </div>
+
+      <div class="blk">
+        <div class="nr"><span class="n">1.</span><label class="field"><span class="lbl">Date of your first consultation</span><input class="ln" name="wcl_first_consult" data-link="hcw_date_seen"></label></div>
+        <div class="nr" style="align-items:start"><span class="n" style="padding-top:0.9mm;line-height:6mm">2.</span>
+          <div class="lined" data-rows="2"><span class="lead">How did the alleged accident happen?</span><textarea name="wcl_how" aria-label="How did the alleged accident happen"></textarea></div></div>
+        <div class="nr" style="align-items:start"><span class="n" style="padding-top:0.9mm;line-height:6mm">3.</span>
+          <div class="lined" data-rows="4"><span class="lead">Full clinical description of injury (ies) <b>(not symptoms, signs or syndromes)</b></span><textarea name="wcl_clinical" aria-label="Full clinical description of injuries"></textarea></div></div>
+        <div class="nr" style="align-items:start"><span class="n" style="padding-top:0.9mm;line-height:6mm">4.</span>
+          <div class="lined" data-rows="3"><span class="lead">Describe briefly any <i><u>pre-existing</u></i> defect disease</span><textarea name="wcl_preexisting" aria-label="Pre-existing defect or disease"></textarea></div></div>
+        <div class="nr"><span class="n">5.</span>
+          <div class="row"><span class="field" style="flex:none"><span class="lbl" style="width:33mm">X-rays</span></span><label class="field"><span class="lbl">Date</span><input class="ln" name="wcl_xray_date"></label><label class="field"><span class="lbl">By whom</span><input class="ln" name="wcl_xray_by"></label></div></div>
+        <div class="nr"><span></span><div style="font-weight:700;font-size:8.5pt;margin-top:-0.5mm">(Attach report if available)</div></div>
+        <div class="nr"><span class="n">6.</span>
+          <div class="row"><span class="field" style="flex:none"><span class="lbl" style="width:33mm">Surgical Procedures:</span></span><label class="field"><span class="lbl">Date</span><input class="ln" name="wcl_surg_date"></label><label class="field"><span class="lbl">By whom</span><input class="ln" name="wcl_surg_by"></label></div></div>
+        <div class="nr" style="align-items:start"><span></span>
+          <div class="lined" data-rows="2"><span class="lead">Brief description</span><textarea name="wcl_surg_desc" aria-label="Surgical procedure description"></textarea></div></div>
+        <div class="nr"><span class="n">7.</span>
+          <div class="row"><span class="field" style="flex:none"><span class="lbl" style="width:33mm">Anaesthetics:</span><span class="yn"><label class="circ"><input type="checkbox" name="wcl_ga" data-group="wcl_anaes"><span>General</span></label>/<label class="circ"><input type="checkbox" name="wcl_la" data-group="wcl_anaes"><span>Local</span></label></span></span><label class="field"><span class="lbl">Duration</span><input class="ln" name="wcl_anaes_duration"></label></div></div>
+        <div class="nr"><span class="n">8.</span>
+          <div class="sub"><span>(a)</span><div class="row"><span class="field" style="flex:none"><span class="lbl">Consultation</span><span class="yn"><label class="circ"><input type="checkbox" name="wcl_consult_y" data-group="wcl_consult"><span>Yes</span></label>/<label class="circ"><input type="checkbox" name="wcl_consult_n" data-group="wcl_consult"><span>No</span></label></span></span><label class="field"><span class="lbl">With whom</span><input class="ln" name="wcl_consult_who"></label><label class="field" style="flex:0 0 40mm"><span class="lbl">Date</span><input class="ln" name="wcl_consult_date"></label></div></div></div>
+        <div class="nr"><span></span>
+          <div class="sub"><span>(b)</span><div class="row"><span class="field" style="flex:none"><span class="lbl">Was the employee referred for physiotherapy?</span><span class="yn"><label class="circ"><input type="checkbox" name="wcl_physio_y" data-group="wcl_physio"><span>Yes</span></label>/<label class="circ"><input type="checkbox" name="wcl_physio_n" data-group="wcl_physio"><span>No</span></label></span></span><label class="field"><span class="lbl">Physiotherapist</span><input class="ln" name="wcl_physio"></label></div></div></div>
+        <div class="nr"><span class="n">9.</span>
+          <div class="sub"><span>(a)</span><div class="row"><span class="field" style="flex:none"><span class="lbl">Is the employee unfit for work?</span><span class="yn"><label class="circ"><input type="checkbox" name="wcl_unfit_y" data-group="wcl_unfit"><span>Yes</span></label>/<label class="circ"><input type="checkbox" name="wcl_unfit_n" data-group="wcl_unfit"><span>No</span></label></span></span><input class="ln" name="wcl_unfit_detail" aria-label="Unfit for work details" style="flex:1"></div></div></div>
+        <div class="nr"><span></span>
+          <div class="sub"><span>(b)</span><div class="row"><span class="field" style="flex:none"><span class="lbl">Possible date fit for:</span></span><label class="field"><span class="lbl">Light duty</span><input class="ln" name="wcl_fit_light"></label><label class="field"><span class="lbl">Normal duty</span><input class="ln" name="wcl_fit_normal"></label></div></div></div>
+      </div>
+
+      <div class="blk">
+        <p class="cert">I certify that I have by examination, satisfied myself that the injury(ies) of the employee is the result of the accident as described above.</p>
+        <div class="field"><span class="lbl">Signature of Medical Practitioner/Chiropractor</span><span class="sigline" title="Signature (sign by hand)"></span></div>
+        <div class="row">
+          <label class="field"><span class="lbl">Name (Printed)</span><input class="ln" name="wcl_dr_name"></label>
+          <div class="field" style="flex:0 0 66mm"><span class="lbl">Date (important)</span><input class="ln" name="wcl_dr_date" aria-label="Date"><button type="button" class="mini-btn screen-only" data-fill-today="wcl_dr_date">Today</button></div>
+        </div>
+        <label class="field"><span class="lbl">Address</span><input class="ln" name="wcl_dr_addr1" value="New Somerset Hospital, Portswood Road, Green Point, Cape Town"></label>
+        <div class="row">
+          <input class="ln" name="wcl_dr_addr2" aria-label="Practitioner address line 2" style="flex:1">
+          <label class="field" style="flex:0 0 40mm"><span class="lbl">Postal Code</span><input class="ln" name="wcl_dr_postal" value="8001"></label>
+          <label class="field" style="flex:0 0 58mm"><span class="lbl">Practice number</span><input class="ln" name="wcl_dr_practice" value="5600634"></label>
+        </div>
+        <p class="nb">N.B.: This report must be handed to the injured employee or sent to the employer within 14 days from the date of first consultation.</p>
+      </div>
+
+      <div class="contact">Call Centre No.: 086 010 5350 – Fax No.: (012) 323-8627 or (012) 323-6986<br>E-mail: cf-info@labour.gov.za – Website: www.labour.gov.za</div>
+    </section>
+
+  </form>
+
+  <script src="../assets/js/form.js"></script>
+  <script src="shared/nhls-request.js"></script>
+  <script src="injury-on-duty.js"></script>
+</body>
+</html>

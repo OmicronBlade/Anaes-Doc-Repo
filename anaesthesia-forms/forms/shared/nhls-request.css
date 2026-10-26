@@ -1,0 +1,118 @@
+/*
+ * NHLS Clinical Pathology request form (P02A1422 version 1) — electronic recreation.
+ * Coordinates are mm on the original form; the whole form is nudged inside the A4 sheet
+ * (.nh left/top) so nothing falls in a printer's unprintable edge.
+ */
+.nh {
+  position: absolute; left: -2mm; top: 3.5mm; width: 210mm; height: 297mm;
+  font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
+  font-size: 8.5pt; line-height: 1; color: #333;
+  --g:  #3db172;   /* bar green      */
+  --lg: #bfeacf;   /* panel green    */
+  --gt: #2f9f5f;   /* test text green */
+  --frame: #4a4a4a;
+  --pitch: 4.85mm; /* block spacing  */
+}
+.nh .a   { position: absolute; white-space: nowrap; }
+.nh .vc  { transform: translateY(-50%); }
+.nh .rule-h { position: absolute; height: 0; border-top: 0.75pt solid var(--frame); }
+.nh .rule-v { position: absolute; width: 0;  border-left: 0.75pt solid var(--frame); }
+.nh .rule-v.g { border-left-color: var(--g); }
+.nh .panel { position: absolute; background: var(--lg); }
+.nh .bar {
+  position: absolute; display: flex; align-items: center; justify-content: center;
+  background: var(--g); color: #fff; font-weight: 700; font-size: 9.6pt; letter-spacing: 0.01em;
+}
+.nh .bar.light { background: var(--lg); color: #222; border: 0.75pt solid var(--frame); font-size: 10.5pt; }
+
+/* labels */
+.nh .lab   { font-weight: 700; color: #3a3a3a; }
+.nh .lab2  { font-weight: 700; color: #3a3a3a; line-height: 0.92; white-space: normal; }
+.nh .t-nhls { font-weight: 700; font-size: 9.6pt; letter-spacing: 0.02em; color: #333; }
+.nh .t-cp   { font-family: "Arial Black", Arial, "Liberation Sans", sans-serif; font-weight: 900; font-size: 17.5pt; letter-spacing: 0.03em; color: #222; }
+.nh .t-var  { font-size: 11pt; color: #222; }
+.nh .t-lab  { font-size: 11.5pt; color: #444; }
+.nh .t-print { font-weight: 700; font-size: 15pt; color: #555; }
+.nh .t-urgent { font-weight: 700; font-size: 12.5pt; color: #222; }
+.nh .watermark {
+  font-weight: 700; font-size: 29pt; letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.55); -webkit-text-stroke: 0.4pt #8fbfa2;
+  pointer-events: none; transition: opacity 0.2s;
+}
+.nh.has-patient .watermark { opacity: 0; }
+
+/* "print in blocks" comb: dashed base line + a tick every block */
+.nh .comb {
+  position: absolute; height: 2.2mm;
+  border-bottom: 0.6pt dashed #6a6a6a;
+  background-image: repeating-linear-gradient(90deg, #6a6a6a 0, #6a6a6a 0.5pt, transparent 0.5pt, transparent var(--pitch));
+  background-size: 100% 1.3mm; background-position: left bottom; background-repeat: no-repeat;
+}
+.nh input.f {
+  position: absolute; height: 4mm; padding: 0 0.6mm;
+  font-family: inherit; font-size: 9pt; color: #000;
+}
+.nh input.f.c { text-align: center; }
+
+/* single-character boxes (Patient ID, ICD10, DOB) */
+.nh .cbox { position: absolute; border: 0.75pt solid var(--frame); background: #fff; }
+.nh .cbox.green { border-color: transparent; background: none; }
+.nh .cbox input { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; text-align: center; font-family: inherit; font-size: 9.5pt; text-transform: uppercase; }
+.nh .cbox input::placeholder { color: #9fb8a8; font-size: 9pt; }
+
+/* test rows */
+.nh .tt     { color: var(--gt); font-size: 8.3pt; }
+.nh .tt.h   { text-decoration: underline; text-underline-offset: 0.5mm; }
+.nh .tt.b   { font-weight: 700; }
+.nh .tr     { position: absolute; display: block; height: 3.2mm; cursor: pointer; }
+.nh .tr > input { position: absolute; opacity: 0; width: 0; height: 0; margin: 0; padding: 0; pointer-events: none; }
+.nh .tb {
+  position: absolute; top: 0.3mm; left: 0; width: 3.8mm; height: 2.6mm;
+  border: 0.6pt solid var(--gt); border-radius: 0.9mm; background: #fff;
+}
+.nh .tr > input:checked + .tb::before,
+.nh .tr > input:checked + .tb::after,
+.nh .xbox > input:checked + .tb::before,
+.nh .xbox > input:checked + .tb::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 3.3mm; height: 0;
+  border-top: 0.45mm solid #000; transform: translate(-50%, -50%) rotate(34deg);
+}
+.nh .tr > input:checked + .tb::after,
+.nh .xbox > input:checked + .tb::after { transform: translate(-50%, -50%) rotate(-34deg); }
+.nh .tr > .nm { position: absolute; top: 0; line-height: 3.2mm; }
+@media screen {
+  .nh .tr:hover .tb { background: rgba(61, 177, 114, 0.18); }
+  .nh .tr > input:focus-visible + .tb { outline: 2px solid #4d8fcc; outline-offset: 1px; }
+}
+
+/* urgent box (black, square) */
+.nh .xbox { position: absolute; cursor: pointer; }
+.nh .xbox > input { position: absolute; opacity: 0; width: 0; height: 0; margin: 0; pointer-events: none; }
+.nh .xbox .tb { top: 0; width: 100%; height: 100%; border: 1pt solid #222; border-radius: 0.4mm; }
+.nh .xbox > input:checked + .tb::before, .nh .xbox > input:checked + .tb::after { width: 5.2mm; border-top-width: 0.5mm; }
+
+/* sex M / F choice */
+.nh .circ { position: absolute; font-weight: 700; color: #3a3a3a; }
+
+/* free-text areas */
+.nh textarea.f {
+  position: absolute; padding: 0.8mm 1.2mm; resize: none; overflow: hidden;
+  font-family: inherit; font-size: 9.5pt; line-height: 1.35; color: #000;
+}
+.nh .small { font-size: 8pt; line-height: 1.25; color: #333; white-space: normal; }
+.nh .code { font-size: 6.5pt; color: #333; }
+.nh .mini-btn { position: absolute; margin: 0; height: 3.8mm; font-family: Calibri, Carlito, sans-serif; font-size: 7.5pt; }
+.nh .box { border: 0.75pt solid var(--frame); }
+.nh .t-sort { font-size: 10.5pt; color: #333; }
+.nh .small-code { font-size: 7pt; }
+.nh .rule-h.g { border-top-color: #6a6a6a; }
+
+/* The printed form uses a condensed sans-serif: condense Arial to match its widths */
+.nh .vc.lab, .nh .vc.lab2 { transform: translateY(-50%) scaleX(0.87); transform-origin: left center; }
+.nh .vc.tt { transform: translateY(-50%) scaleX(0.92); transform-origin: left center; }
+.nh .vc.r  { transform-origin: right center; }
+.nh .fitx  { transform-origin: left center; }
+.nh .tr > .nm { white-space: nowrap; transform: scaleX(0.92); transform-origin: left center; }
+.nh .small { font-stretch: condensed; letter-spacing: -0.01em; }
+.nh input.f, .nh textarea.f { letter-spacing: -0.01em; }
+.nh .foot { font-size: 8.6pt; color: #333; }

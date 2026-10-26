@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light only">
+  <meta name="robots" content="noindex">
+  <title>C/S Prescription Chart</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b5c8a'/%3E%3Cpath d='M9 10h14M9 16h14M9 22h9' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/form.css">
+  <link rel="stylesheet" href="shared/prescription-chart.css">
+</head>
+<body class="form-page">
+
+  <!-- Toolbar: screen only, never printed -->
+  <header class="form-toolbar screen-only">
+    <div class="inner">
+      <a class="back-link" href="../index.html">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
+        All forms
+      </a>
+      <div class="form-title">
+        <h1>C/S Prescription Chart</h1>
+        <span class="version-tag" id="form-version"></span>
+      </div>
+      <div class="toolbar-spacer"></div>
+      <span class="save-status" id="save-status" aria-live="polite"></span>
+      <button type="button" class="btn" id="btn-autofill" title="Fill in the standard post-C/S doctor's instructions, stat doses and regular medication">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>
+        Autofill Standard C/S
+      </button>
+      <button type="button" class="btn btn-quiet" id="btn-clear">Clear</button>
+      <button type="button" class="btn btn-primary" id="btn-print">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 6V2h8v4M4 12H2.5V6.5h11V12H12M4 9.5h8V14H4z"/></svg>
+        Print / Save PDF
+      </button>
+    </div>
+  </header>
+
+  <form id="form" class="sheets rx" autocomplete="off" onsubmit="return false">
+
+    <!-- ===================== PAGE 1 ===================== -->
+    <section class="sheet" aria-label="Page 1">
+      <img class="abs logo" src="../assets/img/wcg-logo.jpg" alt="Western Cape Government">
+
+      <div class="abs titles t-hosp">NEW SOMERSET HOSPITAL</div>
+      <div class="abs titles t-prac">Practice Number 5600634</div>
+      <div class="abs titles t-form">C/S Prescription Chart</div>
+
+      <div class="abs ward-box">
+        <div class="lbl">Ward:</div>
+        <input name="ward" placeholder="PNW/High Care" aria-label="Ward">
+      </div>
+
+      <div class="abs pt-box">
+        <label class="pt-row pt-r1"><span>Name:</span><input name="pt_name"></label>
+        <label class="pt-row pt-r2"><span>Folder Number:</span><input name="pt_folder"></label>
+        <label class="pt-row pt-r3"><span>Date of Birth:</span><input name="pt_dob"></label>
+      </div>
+
+      <div class="abs clin-box">
+        <label class="clin-row cr1"><span class="lbl">Weight:</span><input class="num" name="weight" inputmode="decimal"><span class="unit">kg</span></label>
+        <label class="clin-row cr2"><span class="lbl">eGFR:</span><input class="num" name="egfr" inputmode="decimal"><span class="unit">mL/min/1.73m²</span></label>
+        <label class="clin-row cr3"><span class="lbl" style="width:auto;margin-right:2mm">Allergies:</span><input class="allergy" name="allergies"></label>
+      </div>
+
+      <div class="abs essential">Essential Information for Prescribers</div>
+
+      <table class="info">
+        <colgroup><col style="width:85mm"><col style="width:33mm"><col style="width:33.2mm"><col></colgroup>
+        <tr><th class="l">Nursing Staff</th><th colspan="3">Timing of Doses</th></tr>
+        <tr>
+          <td>Initial block on giving medication (Add time for PRN)</td>
+          <td class="tm" rowspan="3">Daily 06:00 or 10:00</td>
+          <td class="tm" rowspan="4">4 hourly/6 times daily<br>02:00; 06:00; 10:00;<br>14:00; 18:00; 22:00</td>
+          <td class="tm" rowspan="4">8 hourly (oral)<br>06:00; 14:00; 22:00</td>
+        </tr>
+        <tr><td>Medication not given: Code number and initial</td></tr>
+        <tr><td>1. Patient away from ward</td></tr>
+        <tr>
+          <td>2. Nil per mouth</td>
+          <td class="tm" rowspan="2">Twice daily/12 hourly<br>10:00 – 22:00</td>
+        </tr>
+        <tr>
+          <td>3. Patient refuses medication</td>
+          <td class="tm" rowspan="3">6 hourly/ 4 times daily<br>06:00; 12:00; 18:00<br>24:00</td>
+          <td class="tm" rowspan="3">With meals<br>07:30; 11:30; 16:30</td>
+        </tr>
+        <tr>
+          <td>4. Medication not obtained</td>
+          <td class="tm" rowspan="2">Three times daily<br>06:00; 14:00; 22:00</td>
+        </tr>
+        <tr><td>5. Patient could not receive medication (E.g. Vomiting)</td></tr>
+      </table>
+
+      <table class="instr">
+        <colgroup><col style="width:22.4mm"><col><col style="width:22.9mm"></colgroup>
+        <thead><tr><th>DATE/TIME</th><th>DOCTOR’S INSTRUCTIONS</th><th>SIGNATURE</th></tr></thead>
+        <tbody id="instr-body"></tbody>
+      </table>
+
+      <div class="abs premed-title">PRE-MED/STAT DOSES</div>
+      <label class="abs year year-p1">Year:<input name="premed_year"></label>
+
+      <table class="premed">
+        <colgroup>
+          <col style="width:15mm"><col style="width:37.4mm"><col style="width:15mm"><col style="width:13.2mm">
+          <col style="width:14.3mm"><col style="width:19.9mm"><col style="width:22.6mm"><col style="width:15mm"><col>
+        </colgroup>
+        <thead>
+          <tr><th>Date</th><th>Drug</th><th>Dose</th><th>Route</th><th>Time</th><th>Signature</th><th>Pharmacy</th><th colspan="2">Time and Signature</th></tr>
+        </thead>
+        <tbody id="premed-body"></tbody>
+      </table>
+    </section>
+
+    <!-- ===================== PAGE 2 ===================== -->
+    <section class="sheet" aria-label="Page 2">
+      <label class="abs year year-p2">Year:<input name="chart_year"></label>
+      <table class="chart" id="chart"></table>
+    </section>
+
+  </form>
+
+  <script src="../assets/js/form.js"></script>
+  <script src="shared/prescription-chart.js"></script>
+  <script src="cs-prescription.js"></script>
+</body>
+</html>

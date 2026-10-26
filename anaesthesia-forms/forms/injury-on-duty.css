@@ -1,0 +1,249 @@
+/*
+ * Injury on Duty (occupational exposure / PEP pack)
+ * Flowing A4 layout: uniform margins, Calibri throughout, consistent headings,
+ * write-in lines and tables.  Change the margins in one place: --m.
+ */
+
+.iod {
+  --m: 22mm;             /* left / right margin */
+  --mt: 17mm;            /* top margin */
+  --lh: 6.2mm;           /* ruled line spacing for multi-line boxes */
+  --rule: 0.75pt dotted #000;
+}
+
+.iod .sheet {
+  padding: var(--mt) var(--m) 20mm;
+  font-size: 10.5pt;
+  line-height: 1.32;
+}
+
+.iod p { margin: 0 0 2.2mm; }
+.iod b, .iod strong { font-weight: 700; }
+.iod sup { font-size: 65%; line-height: 0; }
+
+/* ---------- Letterhead ---------- */
+.iod .lh { display: flex; justify-content: space-between; align-items: flex-start; }
+.iod .lh-logo { width: 54mm; display: block; }
+.iod .lh-right { width: 52mm; text-align: left; font-size: 9pt; line-height: 1.25; }
+.iod .lh-hosp { font-weight: 700; font-size: 10.5pt; margin-bottom: 1mm; }
+.iod .lh-crest { display: block; width: 12mm; margin: 0 0 1mm 9mm; }
+.iod .lh-dept { font-weight: 700; }
+.iod .lh-rule {
+  height: 1.6mm; margin: 3mm 0 5mm;
+  background: linear-gradient(90deg, rgba(25, 70, 140, 0) 0%, #19468c 35%, #19468c 100%);
+  clip-path: polygon(0 70%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* ---------- Titles & headings ---------- */
+.iod .doc-title {
+  margin: 0 0 1.5mm; text-align: center;
+  font-size: 12pt; font-weight: 700; line-height: 1.25; letter-spacing: 0.01em;
+}
+.iod .doc-sub { margin: 0 0 5mm; text-align: center; font-size: 11.5pt; font-weight: 700; }
+.iod .sec {
+  margin: 5mm 0 2.5mm; padding-bottom: 0.8mm;
+  font-size: 10.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;
+  border-bottom: 0.75pt solid #000;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.iod .sec .aside { font-weight: 400; text-transform: none; letter-spacing: 0; }
+.iod .sec:first-child { margin-top: 0; }
+
+/* ---------- Write-in fields ---------- */
+.iod input.ln {
+  display: inline-block; width: auto; height: 5.6mm;
+  padding: 0 1mm; border-bottom: var(--rule);
+  vertical-align: bottom;
+}
+.iod .field { display: flex; align-items: flex-end; gap: 2mm; min-height: 6.4mm; }
+.iod .field > .lbl { white-space: nowrap; padding-bottom: 0.6mm; }
+.iod .field > input.ln { flex: 1; min-width: 0; }
+.iod .sigline { flex: 1; height: 5.6mm; border-bottom: var(--rule); }
+.iod .field > .mini-btn { margin-bottom: 0.6mm; }
+
+.iod .q { margin-bottom: 3.2mm; }
+.iod .q > .lbl { display: block; margin-bottom: 0.4mm; }
+.iod .q > input.ln { display: block; width: 100%; }
+.iod .hint { color: #444; font-size: 9.5pt; }
+
+/* Ruled multi-line box: <div class="lined" data-rows="4"><textarea name=".."></textarea></div> */
+.iod .lined { position: relative; }
+.iod .lined > .rule { display: block; height: var(--lh); border-bottom: var(--rule); }
+.iod .lined > textarea {
+  position: absolute; left: 0; top: 0; width: 100%; height: calc(100% + 0.9mm);
+  padding: 0.9mm 1mm 0; line-height: var(--lh); font-size: 10.5pt;
+}
+.iod .lined > .lead {
+  position: absolute; left: 0; top: 0; line-height: var(--lh); padding-top: 0.9mm;
+  white-space: nowrap; pointer-events: none;
+}
+
+/* ID boxes (HCW details, source sticker, employee label) */
+.iod .two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; align-items: start; }
+.iod .idbox { border: 0.75pt solid #000; border-radius: 3mm; padding: 2.2mm 3.5mm 2.8mm; }
+.iod .idbox .field > .lbl { width: 24mm; }
+.iod .kv .field > .lbl { width: 30mm; text-align: right; }
+.iod .tabbed { margin-top: 7mm; }
+.iod .tab {
+  display: inline-block; margin: 0 0 -0.75pt 5mm; padding: 1mm 3.5mm;
+  border: 0.75pt solid #000; border-bottom: 0; background: #fff;
+  font-size: 9.5pt; font-weight: 700; letter-spacing: 0.03em; position: relative; z-index: 1;
+}
+
+/* ---------- Tables ---------- */
+.iod table.t { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.iod table.t th, .iod table.t td { border: 0.75pt solid #000; padding: 0.9mm 1.8mm; vertical-align: top; }
+.iod table.t th { font-weight: 700; text-align: left; background: #eef1f5; }
+.iod table.t td.c, .iod table.t th.c { text-align: center; }
+.iod table.t td.m { vertical-align: middle; }
+.iod table.t td.in { padding: 0; vertical-align: middle; }
+.iod table.t td.in > input { height: 6mm; padding: 0 1.8mm; }
+.iod table.t td.in > textarea { display: block; height: 100%; min-height: 6mm; padding: 0.9mm 1.8mm; line-height: 1.32; }
+.iod .note { font-size: 9pt; color: #333; }
+
+/* ---------- Checklist ---------- */
+.iod ul.cl { list-style: none; margin: 0; padding: 0; }
+.iod ul.cl > li { margin: 0 0 1.1mm; }
+.iod ul.sub { list-style: none; margin: 0.6mm 0 0 7mm; padding: 0; }
+.iod ul.sub > li { position: relative; padding-left: 4.5mm; margin-bottom: 0.7mm; }
+.iod ul.sub > li::before { content: "○"; position: absolute; left: 0; top: 0; font-size: 8pt; line-height: 1.75; }
+.iod ul.sq > li::before { content: "▪"; font-size: 9pt; line-height: 1.55; }
+.iod ul.none > li { padding-left: 0; }
+.iod ul.none > li::before { content: none; }
+.iod .tick { align-items: flex-start; }
+.iod .tick .t { flex: 1; }
+.iod .gap { margin-top: 3mm; }
+
+.iod .ico { display: inline-block; width: 5mm; height: 5mm; vertical-align: -1.2mm; margin-left: 1mm; }
+.iod .ico.sm { width: 4mm; height: 4mm; vertical-align: -0.8mm; }
+
+.iod .sidebox {
+  float: right; width: 28mm; margin: 0 0 1mm 3mm; padding: 1.2mm 2mm;
+  border: 0.75pt solid #000; font-size: 9pt; line-height: 1.25; text-align: center;
+}
+.iod .opts .circ { margin-right: 5mm; }
+
+/* ---------- Footnotes & footer ---------- */
+.iod .fn { margin-top: 4mm; padding-top: 1.5mm; border-top: 0.6pt solid #000; width: 100%; font-size: 8.5pt; line-height: 1.3; }
+.iod .fn p { margin: 0 0 0.6mm; }
+.iod .fn-bottom { position: absolute; left: var(--m); right: var(--m); bottom: 17mm; }
+.iod .pfoot {
+  position: absolute; left: var(--m); right: var(--m); bottom: 10mm;
+  padding-top: 1mm; border-top: 0.5pt solid #b8bec6;
+  text-align: right; font-size: 8pt; color: #666;
+}
+.iod .pfoot span { color: #9aa3ad; }
+
+/* ---------- Page 4: Hep B ---------- */
+.iod .hepb td { text-align: center; vertical-align: middle; font-size: 9.5pt; line-height: 1.25; padding: 1.1mm 2mm; }
+.iod .hepb td.rowh { font-weight: 700; }
+.iod .hepb td.rowh small { font-weight: 400; font-size: 8.5pt; }
+.iod .given td, .iod .given th { padding: 0; height: 5.6mm; }
+.iod .given th { padding: 0.6mm 1.8mm; }
+.iod .given td.lab { text-align: right; padding-right: 2mm; vertical-align: middle; background: #eef1f5; font-weight: 700; font-size: 9.5pt; }
+.iod .given td.sp, .iod .given th.sp { border: 0; background: none; }
+.iod .given input { height: 5.6mm; padding: 0 1mm; text-align: center; font-size: 9.5pt; }
+.iod .arvs { line-height: 1.6; }
+.iod .arvs .circ { margin-right: 1.2mm; padding: 0 1mm; font-size: 9.5pt; }
+
+/* ---------- Page 5: follow-up ---------- */
+.iod .fu { margin-bottom: 3.6mm; }
+.iod .fu-head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 1mm 2mm; background: #eef1f5; border-top: 0.75pt solid #000; border-bottom: 0.75pt solid #000;
+  font-weight: 700;
+}
+.iod .fu-head .field { min-height: 0; font-weight: 400; }
+.iod .fu-head .field .lbl { font-weight: 700; }
+.iod .fu-head input.ln { width: 30mm; height: 5mm; background: #fff; }
+.iod .fu-body { display: grid; grid-template-columns: 60mm 1fr; gap: 5mm; padding-top: 1.4mm; }
+.iod .fu-body ul.cl > li { margin-bottom: 0.4mm; font-size: 10pt; line-height: 1.24; }
+.iod .fu-body .lined { --lh: 5.4mm; }
+.iod .fu-body .lined > textarea { font-size: 10pt; }
+
+/* ---------- Page 6: W.Cl.4 ---------- */
+.iod .wcl { font-family: Arial, "Liberation Sans", Helvetica, sans-serif; font-size: 9.5pt; line-height: 1.3; }
+.iod .wcl input, .iod .wcl textarea { font-family: Calibri, Carlito, "Segoe UI", Arial, sans-serif; font-size: 10.5pt; }
+.iod .wcl-code { position: absolute; right: var(--m); top: 10mm; font-size: 8.5pt; }
+.iod .wcl-logo { width: 64mm; display: block; }
+.iod .wcl-claim { display: flex; justify-content: flex-end; margin: 6mm 0 3.5mm; font-size: 11pt; }
+.iod .wcl-claim .field { width: 80mm; }
+.iod .wcl h1 { margin: 0; text-align: center; font-size: 13pt; font-weight: 700; }
+.iod .wcl h2 { margin: 0.8mm 0 0; text-align: center; font-size: 9.5pt; font-weight: 700; }
+.iod .wcl .ref { text-align: center; font-size: 7.5pt; margin-top: 0.3mm; }
+.iod .wcl .blk { border-top: 1pt solid #000; padding: 1.8mm 0 1.2mm; }
+.iod .wcl .blk:first-of-type { margin-top: 3.5mm; }
+.iod .wcl .field { min-height: 6mm; }
+.iod .wcl .row { display: flex; gap: 4mm; }
+.iod .wcl .row > .field { flex: 1; }
+.iod .wcl .nr { display: grid; grid-template-columns: 7mm 1fr; align-items: end; }
+.iod .wcl .nr > .n { padding-bottom: 0.6mm; }
+.iod .wcl .sub { display: grid; grid-template-columns: 7mm 1fr; align-items: end; }
+.iod .wcl .yn { white-space: nowrap; padding-bottom: 0.6mm; }
+.iod .wcl .yn .circ { padding: 0 1mm; margin: 0 0.6mm; }
+.iod .wcl .lined { --lh: 6mm; }
+.iod .wcl .cert { font-weight: 700; font-size: 10pt; margin: 0 0 2mm; }
+.iod .wcl .nb { font-weight: 700; font-size: 10pt; margin-top: 4mm; }
+.iod .wcl .contact { position: absolute; left: var(--m); right: var(--m); bottom: 13mm; text-align: center; font-weight: 700; font-size: 11pt; line-height: 1.35; }
+.iod .wcl .w-sm { width: 30mm; flex: none !important; }
+
+/* ---------- Density (keeps every page on one A4 sheet) ---------- */
+.iod { --lh: 5.8mm; }
+.iod .lh-logo { width: 46mm; }
+.iod .lh-rule { margin: 2.5mm 0 4mm; }
+.iod .doc-sub { margin-bottom: 3mm; }
+.iod .sec { margin: 4mm 0 2mm; }
+.iod .q { margin-bottom: 2.2mm; }
+.iod .field { min-height: 5.8mm; }
+.iod input.ln { height: 5.2mm; }
+.iod .gap { margin-top: 2mm; }
+.iod .idbox { padding: 1.6mm 3.5mm 2.2mm; }
+.iod .lined > .lead { background: #fff; padding-right: 1.5mm; z-index: 1; }
+
+/* page 3 */
+.iod .p-check { font-size: 10pt; line-height: 1.28; }
+.iod .p-check ul.cl > li { margin-bottom: 0.6mm; }
+.iod .p-check ul.sub > li { margin-bottom: 0.25mm; }
+.iod .p-check .gap { margin-top: 1.6mm; }
+.iod .p-check .field { min-height: 5.2mm; }
+.iod .p-check p { margin-bottom: 1.4mm; }
+.iod .p-check table.t td, .iod .p-check table.t th { padding: 0.6mm 1.8mm; }
+
+/* page 4 */
+.iod .p-hepb .sec { margin: 3.5mm 0 1.6mm; }
+.iod .p-hepb .hepb td { font-size: 9pt; line-height: 1.18; padding: 0.8mm 1.6mm; }
+.iod .p-hepb table.t th { padding: 0.6mm 1.8mm; }
+.iod .p-hepb table.t td { padding: 0.5mm 1.8mm; font-size: 10pt; line-height: 1.25; }
+.iod .p-hepb table.t td.in { padding: 0; }
+.iod .p-hepb table.t td.in > input { height: 5.4mm; }
+.iod .p-hepb .given td { height: 5.2mm; }
+.iod .p-hepb .given input { height: 5.2mm; }
+.iod .p-hepb .tick > .box { margin-top: 0.4mm; }
+.iod .p-hepb .arvs { line-height: 1.5; padding: 0.4mm 1.2mm; }
+.iod .p-hepb .arvs .circ { font-size: 9pt; padding: 0 0.8mm; margin-right: 0.6mm; }
+.iod .p-hepb .fn-bottom { bottom: 16mm; }
+
+/* page 6 */
+.iod .wcl { --lh: 5.3mm; }
+.iod .wcl .field { min-height: 5.3mm; }
+.iod .wcl input.ln { height: 4.9mm; }
+.iod .wcl-logo { width: 56mm; }
+.iod .wcl-claim { margin: 3mm 0 2.5mm; }
+.iod .wcl .blk { padding: 1.4mm 0 1mm; }
+.iod .wcl .blk:first-of-type { margin-top: 2.5mm; }
+.iod .wcl .nb { margin-top: 2.5mm; }
+.iod .wcl .contact { bottom: 11mm; font-size: 10.5pt; }
+.iod .wcl .cert { margin-bottom: 1.2mm; }
+.iod .p-hepb .arvs { white-space: nowrap; padding: 0.4mm 1mm; }
+.iod .p-hepb .arvs .circ { font-size: 8.5pt; padding: 0 0.75mm; margin: 0; }
+.iod .p-hepb .arvs .circ > input:checked + span::before { left: -0.75mm; right: -0.75mm; }
+.iod .p-hepb .sec { margin: 3mm 0 1.4mm; }
+.iod .p-hepb .fn-bottom { bottom: 15.5mm; font-size: 8pt; line-height: 1.22; }
+.iod .p-hepb .fn p { margin-bottom: 0.4mm; }
+
+/* layout fixes */
+.iod .fn-bottom { width: auto; }
+.iod .wcl .nr, .iod .wcl .sub { grid-template-columns: 7mm minmax(0, 1fr); }
+.iod .wcl .row, .iod .wcl .row > .field { min-width: 0; }
+.iod .wcl .row > .field > .lbl { flex: none; }
+.iod .lh-right { width: 58mm; }

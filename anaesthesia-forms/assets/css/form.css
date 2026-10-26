@@ -1,0 +1,283 @@
+/*
+ * Shared styles for every form page.
+ * - Screen: sticky toolbar + A4 "paper" sheets on a grey desk.
+ * - Print:  toolbar hidden, sheets printed edge-to-edge at exact A4 size.
+ * Landscape sheets: add class "landscape" to a .sheet.
+ */
+
+/* ---------- Page setup ---------- */
+@page { size: A4 portrait; margin: 0; }
+@page landscape { size: A4 landscape; margin: 0; }
+
+body.form-page { background: #e6eaef; }
+
+
+/* ---------- Toolbar (screen only) ---------- */
+.form-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.form-toolbar .inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 16px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--accent); }
+.back-link svg { width: 14px; height: 14px; }
+
+.form-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.form-title h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toolbar-spacer { flex: 1; }
+
+/* second toolbar row: form options (presets, switches) */
+.form-toolbar .options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px 16px 10px;
+  border-top: 1px solid var(--border);
+}
+.opt-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.opt-label {
+  margin-right: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.btn.is-active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+
+.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); overflow: hidden; }
+.seg button {
+  font: inherit; font-size: 13px; font-weight: 500;
+  padding: 6px 12px; color: var(--text); background: var(--surface);
+  border: 0; border-left: 1px solid var(--border-strong); cursor: pointer; white-space: nowrap;
+}
+.seg button:first-child { border-left: 0; }
+.seg button:hover { color: var(--accent); }
+.seg button[aria-pressed="true"] { color: var(--accent); background: var(--accent-soft); }
+
+.save-status {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn svg { width: 14px; height: 14px; }
+
+.btn-primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.btn-primary:hover { color: #fff; background: var(--accent-hover); border-color: var(--accent-hover); }
+
+
+.btn-quiet { border-color: transparent; color: var(--text-muted); }
+.btn-quiet:hover { border-color: var(--border); color: #b42318; }
+
+/* ---------- Sheets ---------- */
+.sheets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 16px 64px;
+  overflow-x: auto;
+}
+
+.sheet {
+  position: relative;
+  flex: none;
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+  color-scheme: light;
+  box-shadow: 0 1px 3px rgba(15, 23, 32, 0.12), 0 8px 24px rgba(15, 23, 32, 0.08);
+  font-family: Calibri, Carlito, "Segoe UI", Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.15;
+}
+
+.sheet.landscape {
+  width: 297mm;
+  height: 210mm;
+  page: landscape;
+}
+
+/* ---------- Editable fields ---------- */
+.sheet input,
+.sheet textarea {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0 1.2mm;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.sheet textarea { resize: none; overflow: hidden; }
+
+.sheet input::placeholder { color: #8c8c8c; opacity: 1; }
+
+@media screen {
+  .sheet input:hover,
+  .sheet textarea:hover { background: rgba(43, 92, 138, 0.06); }
+  .sheet input:focus,
+  .sheet textarea:focus {
+    background: rgba(43, 92, 138, 0.09);
+    box-shadow: inset 0 0 0 1px #4d8fcc;
+  }
+  .sheet input.just-filled { background: rgba(43, 92, 138, 0.14); transition: background 1.2s ease; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  body.form-page { background: #fff; }
+  .form-toolbar,
+  .toast { display: none !important; }
+  .sheets { display: block; padding: 0; gap: 0; overflow: visible; }
+  .sheet {
+    box-shadow: none;
+    margin: 0;
+    break-after: page;
+    page-break-after: always;
+  }
+  .sheet:last-child { break-after: auto; page-break-after: auto; }
+  .sheet input,
+  .sheet textarea { background: transparent !important; box-shadow: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #fff;
+  background: #1f2933;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 30;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* =====================================================================
+   Shared form components (used by flowing-layout forms, e.g. Injury on Duty)
+   ===================================================================== */
+
+/* Tick box: <label class="tick"><input type="checkbox" name=".."><span class="box"></span>Text</label> */
+.sheet .tick { position: relative; display: inline-flex; align-items: flex-start; gap: 1.8mm; cursor: pointer; }
+.sheet .tick > input,
+.sheet .circ > input,
+.sheet td.circle-cell > input {
+  position: absolute; opacity: 0; width: 0; height: 0; margin: 0; padding: 0; pointer-events: none;
+}
+.sheet .tick > .box {
+  flex: none; position: relative;
+  width: 3.2mm; height: 3.2mm; margin-top: 0.55mm;
+  border: 0.6pt solid #000; background: #fff;
+}
+.sheet .tick > input:checked + .box::after {
+  content: ""; position: absolute;
+  left: 0.9mm; top: 0.1mm; width: 0.9mm; height: 1.8mm;
+  border: solid #000; border-width: 0 0.45mm 0.45mm 0;
+  transform: rotate(45deg);
+}
+
+/* Circled choice: <label class="circ"><input type="checkbox" name=".." data-group=".."><span>Yes</span></label> */
+.sheet .circ { position: relative; display: inline-block; cursor: pointer; padding: 0 1.3mm; }
+.sheet .circ > span { position: relative; }
+.sheet .circ > input:checked + span::before {
+  content: ""; position: absolute; left: -1.3mm; right: -1.3mm; top: -0.4mm; bottom: -0.4mm;
+  border: 1pt solid #000; border-radius: 50%;
+}
+
+/* Circled table block */
+.sheet td.circle-cell { position: relative; cursor: pointer; }
+.sheet td.circle-cell.is-circled::after {
+  content: ""; position: absolute; inset: 0.35mm 0.6mm;
+  border: 1.2pt solid #000; border-radius: 3.5mm; pointer-events: none;
+}
+
+@media screen {
+  .sheet .tick:hover > .box { background: rgba(43, 92, 138, 0.12); }
+  .sheet .tick > input:focus-visible + .box { outline: 2px solid #4d8fcc; outline-offset: 1px; }
+  .sheet .circ:hover > span,
+  .sheet td.circle-cell:hover { background: rgba(43, 92, 138, 0.08); }
+  .sheet .circ > input:focus-visible + span { outline: 2px solid #4d8fcc; outline-offset: 1px; }
+  .sheet textarea.overflowing { box-shadow: inset 0 0 0 1.5px #d92d20 !important; }
+}
+
+/* Small screen-only button inside a sheet (Today, Now, Check all) */
+.sheet .mini-btn {
+  display: inline-block; vertical-align: middle;
+  height: 4.4mm; padding: 0 2mm; margin-left: 1.5mm;
+  font: inherit; font-size: 8pt; line-height: 1;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid transparent; border-radius: 3px; cursor: pointer;
+}
+.sheet .mini-btn:hover { border-color: var(--accent); }

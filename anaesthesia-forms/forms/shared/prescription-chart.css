@@ -1,0 +1,194 @@
+/*
+ * NSH prescription chart layout (shared by the C/S and Induction of Labour forms).
+ * Measured from the original Word/PDF form; positions in mm from the sheet's top-left.
+ * The vertical position of the pre-med section is set by prescription-chart.js
+ * from the number of instruction rows.
+ */
+
+.rx .abs { position: absolute; }
+.rx .b { font-weight: 700; }
+
+/* Default table look (Word "Table Grid": 0.5pt black) */
+.rx table {
+  position: absolute;
+  left: 12.7mm;
+  width: 184.8mm;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.rx td, .rx th {
+  border: 0.5pt solid #000;
+  padding: 0;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+/* ================= PAGE 1 ================= */
+
+.rx .logo { left: 11.5mm; top: 13.2mm; width: 50.5mm; }
+
+.rx .titles {
+  left: 55.1mm;
+  width: 100mm;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1;
+}
+.rx .t-hosp { top: 13.4mm; font-size: 18pt; }
+.rx .t-prac { top: 21.5mm; font-size: 10pt; }
+.rx .t-form { top: 26.1mm; font-size: 16.3pt; white-space: nowrap; }
+
+.rx .ward-box {
+  left: 165.4mm; top: 12.2mm;
+  width: 36.4mm; height: 16.9mm;
+  border: 1.6pt solid #000;
+  padding: 2.4mm 2.3mm 0;
+}
+.rx .ward-box .lbl { font-size: 11pt; }
+.rx .ward-box input { padding: 0; margin-top: 2.6mm; height: 5mm; font-size: 11pt; }
+
+/* Patient sticker box */
+.rx .pt-box {
+  left: 11.8mm; top: 34.4mm;
+  width: 111.2mm; height: 24.5mm;
+  border: 0.6pt solid #8a8a8a;
+  border-radius: 4mm;
+}
+.rx .pt-row {
+  position: absolute;
+  left: 3.6mm; width: 97mm;
+  display: flex; align-items: flex-end;
+  height: 4.6mm;
+  font-size: 9pt;
+}
+.rx .pt-row span { white-space: nowrap; padding-bottom: 0.1mm; }
+.rx .pt-row input {
+  flex: 1;
+  height: 3.9mm;
+  margin-left: 1mm;
+  padding: 0 0.5mm;
+  font-size: 10.5pt;
+  border-bottom: 1pt dotted #000;
+}
+.rx .pt-r1 { top: 2.2mm; }
+.rx .pt-r2 { top: 9.3mm; }
+.rx .pt-r3 { top: 16.3mm; }
+
+/* Weight / eGFR / allergies box */
+.rx .clin-box {
+  left: 125.1mm; top: 34.3mm;
+  width: 76.7mm; height: 24.8mm;
+  border: 0.9pt solid #000;
+  border-radius: 4.5mm;
+}
+.rx .clin-row {
+  position: absolute;
+  left: 3.3mm; right: 2.5mm;
+  display: flex; align-items: flex-end;
+  height: 5mm;
+  font-size: 11pt;
+}
+.rx .clin-row .lbl { font-weight: 700; width: 25.5mm; flex: none; padding-bottom: 0.3mm; }
+.rx .clin-row .num {
+  width: 13.3mm; flex: none;
+  height: 4.3mm;
+  padding: 0 0.5mm;
+  text-align: center;
+  border-bottom: 0.75pt solid #000;
+}
+.rx .clin-row .unit { padding-bottom: 0.3mm; white-space: nowrap; }
+.rx .clin-row .allergy { flex: 1; height: 5mm; padding: 0 0.5mm; }
+.rx .cr1 { top: 3.4mm; }
+.rx .cr2 { top: 10.9mm; }
+.rx .cr3 { top: 18.4mm; }
+
+.rx .essential {
+  left: 0; right: 0; top: 61.1mm;
+  text-align: center;
+  font-size: 12pt; font-weight: 700;
+}
+
+/* Essential information table */
+.rx .info { top: 69.5mm; font-size: 10pt; }
+.rx .info tr { height: 4.54mm; }
+.rx .info th { font-size: 11pt; font-weight: 700; text-align: center; }
+.rx .info th.l { text-align: left; padding-left: 1.6mm; }
+.rx .info td { padding-left: 1.6mm; white-space: nowrap; }
+.rx .info td.tm {
+  padding: 0.3mm 0.5mm 0;
+  vertical-align: top;
+  text-align: center;
+  font-size: 9pt;
+  line-height: 3.9mm;
+  white-space: normal;
+}
+
+/* Doctor's instructions */
+.rx .instr { top: 113.8mm; }
+.rx .instr tr { height: 4.91mm; }
+.rx .instr th { font-size: 11pt; font-weight: 700; }
+.rx .instr input { height: 4.3mm; font-size: 10pt; }
+
+/* Pre-med / stat doses */
+.rx .premed-title {
+  left: 0; right: 0; top: 231mm;
+  text-align: center;
+  font-size: 11pt; font-weight: 700;
+}
+.rx .year-p1 { left: 14.6mm; top: 234.3mm; }
+.rx .year {
+  display: flex; align-items: center;
+  font-size: 11pt; font-weight: 700;
+}
+.rx .year input { width: 22mm; height: 4.8mm; font-weight: 400; margin-left: 1mm; }
+
+.rx .premed { top: 239.2mm; font-size: 11pt; }
+.rx .premed tr { height: 4.91mm; }
+.rx .premed th { font-weight: 400; text-align: left; padding-left: 1.6mm; }
+.rx .premed input { height: 4.3mm; font-size: 11pt; }
+.rx .premed input.drug { font-weight: 700; }
+
+/* ================= PAGE 2 ================= */
+
+.rx .year-p2 { left: 14.6mm; top: 13.8mm; z-index: 1; }
+
+.rx .chart { top: 12.7mm; }
+.rx .chart .hdr { height: 10.2mm; }
+.rx .chart .row { height: 6.107mm; }
+
+.rx .chart td.yr { border-top: none; border-left: none; }
+
+.rx .chart td.diag { position: relative; font-size: 8pt; }
+.rx .chart td.diag svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rx .chart td.diag .d { position: absolute; right: 3.6mm; top: 0.6mm; }
+.rx .chart td.diag .t { position: absolute; left: 1.4mm; bottom: 3.2mm; }
+
+.rx .chart td.dh input {
+  height: 9.6mm; padding: 0;
+  font-size: 7.5pt; text-align: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* labelled cells in the medicine blocks */
+.rx .chart td.lab { vertical-align: top; padding: 0.15mm 0 0; }
+.rx .chart td.lab .lbl {
+  padding-left: 1.4mm;
+  font-size: 9pt; font-weight: 700;
+  white-space: nowrap;
+  line-height: 1.15;
+}
+.rx .chart td.lab input { height: 6.2mm; margin-top: 0.4mm; padding: 0 1.4mm; font-size: 12pt; }
+
+.rx .chart td.tc input { height: 5.4mm; font-size: 9pt; text-align: center; padding: 0 0.6mm; }
+.rx .chart td.gc input { height: 5.4mm; font-size: 8pt; text-align: center; padding: 0; }
+
+/* heavy rules between medicine blocks */
+/* 2px, not 1.4pt: Chrome rounds collapsed table borders down to whole pixels */
+.rx .chart .tk-t { border-top: 2px solid #000; }
+.rx .chart .tk-l { border-left: 2px solid #000; }
+.rx .chart .tk-r { border-right: 2px solid #000; }
+.rx .chart .tk-b { border-bottom: 2px solid #000; }
+
+/* route suggestions appear while typing (or press ↓); no arrow, so it never steals width */
+.rx input[list]::-webkit-calendar-picker-indicator { display: none !important; }

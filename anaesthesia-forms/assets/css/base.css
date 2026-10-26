@@ -1,0 +1,82 @@
+/*
+ * Shared tokens and rules for the landing page AND every form page.
+ * Print rule of note: anything with .screen-only (e.g. the version tag)
+ * is removed from printed / PDF output.
+ */
+
+:root {
+  color-scheme: light;
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --border: #dde3ea;
+  --border-strong: #c5ced8;
+  --text: #1f2933;
+  --text-muted: #5f6b7a;
+  --text-faint: #8a96a3;
+  --accent: #2b5c8a;
+  --accent-hover: #234c73;
+  --accent-soft: #e8f0f8;
+  --focus: #4d8fcc;
+
+  --radius: 8px;
+  --radius-sm: 5px;
+  --shadow: 0 1px 2px rgba(31, 41, 51, 0.04);
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a { color: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.version-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 8px;
+  white-space: nowrap;
+}
+
+/* ---------- Print ---------- */
+@media print {
+  :root {
+    --bg: #fff;
+    --surface: #fff;
+    --text: #000;
+    --text-muted: #333;
+    --border: #999;
+  }
+  body { background: #fff; font-size: 10.5pt; }
+  .screen-only,
+  .version-tag { display: none !important; }
+  a { color: inherit; text-decoration: none; }
+}
