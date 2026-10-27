@@ -1,0 +1,141 @@
+/*
+ * Patient Safety Incident (PSI) Reporting Form — A4 landscape.
+ * Rebuilt from the WCG Word form (US Letter landscape, Arial, green #006024).
+ * Tables are stacked blocks (.blk) whose borders overlap so they read as one grid.
+ * Change the margins in one place: --mx / --mt.
+ */
+
+.psi {
+  --mx: 21mm;          /* left / right margin */
+  --mt: 11.5mm;            /* top margin */
+  --g: #006024;          /* header green */
+  --tint: #eff4ef;       /* "Compiled by" (Section A) */
+  --row: 5.3mm;          /* ruled line spacing */
+  --line: 0.5pt solid #000;
+}
+
+.psi .sheet {
+  font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
+  font-size: 10pt;
+  line-height: 1.18;
+}
+.psi .sheet .body { position: absolute; left: var(--mx); right: var(--mx); top: var(--mt); }
+.psi .pno { position: absolute; right: var(--mx); bottom: 7mm; font-size: 9pt; }
+
+/* ---------- Page 1 heading ---------- */
+.psi .title-row { display: flex; align-items: baseline; gap: 0; margin: 1.5mm 0 5.5mm 1.6mm; }
+.psi .title-row h1 { margin: 0; width: 151mm; font-size: 14pt; font-weight: 700; }
+.psi .facility { flex: 1; display: flex; align-items: baseline; gap: 2mm; font-size: 14pt; font-weight: 700; }
+.psi .facility input { flex: 1; height: 6.5mm; font-size: 13pt; font-weight: 700; padding: 0 1mm; }
+.psi .intro { margin: 0 0 0 1.6mm; font-size: 11pt; line-height: 1.32; }
+.psi .intro p { margin: 0 0 0.2mm; }
+.psi .sec-row { display: flex; justify-content: space-between; align-items: flex-start; margin: 4.5mm 5mm 0 1.6mm; }
+.psi h2 { margin: 0; font-size: 12pt; font-weight: 700; }
+.psi .sec-row h2 { padding-top: 0.3mm; }
+.psi .ref-box { display: flex; height: 13.5mm; border: var(--line); margin-bottom: -1mm; }
+.psi .ref-box span { width: 24mm; }
+.psi .ref-box span.g { background: var(--g); }
+.psi h2.sec-b { margin: 5mm 0 0 1.6mm; }
+.psi h2.sec-b.first, .psi h2.sec-c { margin: 0 0 0 1.6mm; }
+
+/* ---------- Table blocks ---------- */
+.psi table.blk {
+  width: 100%; border-collapse: collapse; table-layout: fixed;
+  margin-top: -0.5pt;                       /* overlap the previous block's bottom rule */
+}
+.psi .blk th, .psi .blk td {
+  border: var(--line); padding: 0.35mm 1.2mm; text-align: left; vertical-align: top;
+  font-weight: 400; overflow: hidden;
+}
+.psi .blk th.g { background: var(--g); color: #fff; font-weight: 700; }
+.psi .blk th.ind { padding-left: 4mm; }
+.psi .blk th.big { font-size: 10.5pt; padding-top: 0.8mm; padding-bottom: 0.8mm; }
+.psi .blk th.ind2 { padding-left: 6.5mm; }
+.psi .blk .b { font-weight: 700; }
+.psi .blk .c { text-align: center; }
+.psi .blk .j { text-align: justify; text-align-last: justify; }
+.psi .blk tr.r > * { height: 5.3mm; }
+
+/* inputs inside cells */
+.psi .blk td.in { padding: 0; }
+.psi .blk td.in input { height: 5mm; padding: 0 1.2mm; }
+.psi .blk td.dt { display: table-cell; white-space: nowrap; }
+.psi .blk td.dt input { display: inline-block; width: calc(100% - 13mm); vertical-align: middle; }
+.psi .blk td.dt .mini-btn { height: 3.9mm; margin-left: 0.5mm; font-size: 7pt; }
+
+/* ---------- "Mark with an X" cells ---------- */
+.psi .sheet td.circle-cell.x { position: relative; cursor: pointer; padding-right: 5mm; }
+.psi .sheet td.circle-cell.is-circled::after {
+  content: "X"; inset: auto; right: 1.2mm; top: 50%; transform: translateY(-50%);
+  border: 0; border-radius: 0;
+  font-family: Arial, "Liberation Sans", sans-serif; font-size: 12pt; font-weight: 700; line-height: 1; color: #000;
+}
+@media screen {
+  .psi .sheet td.circle-cell.x:hover { box-shadow: inset 0 0 0 999px rgba(43, 92, 138, 0.08); }
+  .psi .sheet td.circle-cell.x:focus-within { outline: 2px solid #4d8fcc; outline-offset: -2px; }
+}
+
+/* SAC rating colour cells */
+.psi table.sac td.x { text-align: center; font-weight: 700; font-size: 11pt; padding: 0.6mm 0; vertical-align: middle; }
+.psi table.sac td.x.is-circled { color: transparent; }
+.psi table.sac td.x.is-circled::after { right: 0; left: 0; text-align: center; font-size: 13pt; }
+.psi table.sac th, .psi table.sac td { vertical-align: middle; }
+
+/* Method of detecting */
+.psi table.method td { font-size: 9pt; line-height: 1.12; padding: 0.4mm 0.9mm; }
+.psi table.method td.x { padding-right: 0.9mm; height: 4.6mm; }
+.psi table.method td.x.is-circled::after { top: auto; bottom: 0.6mm; transform: none; right: 1mm; }
+.psi table.method tr:first-child > * { height: 8.1mm; }
+.psi table.method td.ext { vertical-align: middle; }
+
+/* ---------- Ruled multi-line boxes ---------- */
+.psi .blk td.lines { padding: 0; }
+.psi .lined { position: relative; }
+.psi .lined > .rule { display: block; height: var(--row); border-bottom: var(--line); }
+.psi .lined > .rule:last-of-type { border-bottom: 0; }
+.psi .lined > textarea {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  padding: 0.5mm 1.2mm 0; line-height: var(--row); font-size: 10pt;
+}
+
+/* ---------- Compiled by ---------- */
+.psi tr.compiled > td { font-weight: 700; white-space: nowrap; padding: 0.4mm 1.2mm; height: 5.3mm; vertical-align: middle; }
+.psi tr.compiled.tint > td { background: var(--tint); }
+.psi tr.compiled .lbl { margin-right: 1mm; }
+.psi tr.compiled input { display: inline-block; width: auto; height: 4.4mm; vertical-align: middle; font-weight: 400; }
+.psi tr.compiled td:first-child input { width: calc(100% - 25mm); }
+.psi tr.compiled td:nth-child(2) input { width: calc(100% - 25mm); }
+.psi tr.compiled td:last-child input { width: calc(100% - 22mm); }
+.psi tr.compiled.tall > td { font-weight: 400; height: 9.5mm; vertical-align: bottom; padding-bottom: 0.8mm; }
+.psi tr.compiled .mini-btn { height: 3.9mm; font-size: 7pt; margin-left: 0.5mm; }
+
+/* ---------- Section C: category table ---------- */
+.psi table.cat td, .psi table.cat th { font-size: 8pt; line-height: 1.12; padding: 0.45mm 1mm; }
+.psi table.cat th.big { font-size: 10.5pt; }
+.psi table.cat tr.cat-h > th { height: 11mm; font-size: 8pt; }
+.psi table.cat td.x { padding-right: 3.6mm; height: 5.15mm; vertical-align: middle; }
+.psi table.cat td.x.is-circled::after { font-size: 10pt; right: 0.8mm; }
+.psi table.cat th.sub { font-size: 8pt; vertical-align: middle; }
+.psi table.cat tr > td:not(.x) { height: 5.15mm; }
+.psi table.cat td.x[rowspan] { vertical-align: top; }
+.psi table.cat td.x[rowspan].is-circled::after { top: 12mm; transform: none; }
+
+/* contributing factors */
+.psi table.cf td { font-size: 8.6pt; line-height: 1.1; padding: 0.4mm 1mm; }
+.psi table.cf td.b { font-size: 10pt; }
+.psi table.cf td.x { padding-right: 4mm; }
+.psi table.cf td.x.is-circled::after { font-size: 10.5pt; right: 0.8mm; }
+.psi table.cf td.in input { height: 4.6mm; }
+
+/* ---------- Page 4 ---------- */
+.psi tr.rca-h > th { font-size: 9pt; line-height: 1.15; height: 11mm; }
+.psi table.closing th, .psi table.closing td { vertical-align: top; }
+.psi table.closing td.x { line-height: 1.15; }
+.psi table.org th, .psi table.org td { font-size: 9.4pt; line-height: 1.15; }
+.psi table.org th { font-size: 10pt; }
+.psi table.org td.x { padding-right: 4mm; }
+.psi table.org td.x.is-circled::after { font-size: 10.5pt; right: 0.8mm; }
+
+/* toolbar buttons */
+.btn:disabled { opacity: 0.45; cursor: default; }
+.btn:disabled:hover { border-color: var(--border-strong); color: var(--text); }

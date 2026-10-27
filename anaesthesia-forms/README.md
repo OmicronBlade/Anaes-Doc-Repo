@@ -71,4 +71,9 @@ Push to GitHub → Settings → Pages → Deploy from branch → `main` / root.
   consent form; they also print on A4. QR codes are SVGs in `assets/img/qr/`, made by `python tools/build_qr.py`
   (`pip install qrcode`). If the site address changes, update `BASE_URL` there and `LEAFLET_BASE` in
   `forms/shared/regional-consent.js`, then rerun it.
+- **Patient Safety Incident (PSI) Reporting Form** (`forms/psi-report.*`): the WCG Word form (US Letter landscape)
+  rebuilt as four A4-landscape pages in Arial with the original green. "Mark with an X" boxes are click-to-mark cells
+  (FormKit `td.circle-cell`, drawn as an X; `data-group` makes PSI type, SAC, category, Just Culture, closure and
+  harm single-choice). "No of days" fields fill themselves from the dates until typed over. Toolbar *Add statement*
+  adds Section B pages (Statement 2, 3, …; count kept in the hidden `statements` field).
 - After changing a form that has a quick-download PDF, run `python tools/build_pdfs.py`.

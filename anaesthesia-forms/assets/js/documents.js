@@ -226,13 +226,19 @@ window.DOCUMENTS = [
     tags: ["IOD", "injury on duty", "needlestick", "PEP", "occupational exposure", "COIDA", "W.Cl.4", "WCL4", "first medical report", "hepatitis B", "HIV", "NHLS", "lab form", "bloods"]
   },
   {
-    id: "critical-incident",
-    title: "Critical Incident Report",
+    id: "psi-report",
+    title: "Patient Safety Incident (PSI) Reporting Form",
     category: "Audit, Safety & Data",
-    description: "Adverse event documentation for departmental review.",
+    description: "WCG PSI form: Section A notification (PSI type, SAC rating), Section B staff statements, Section C investigation and root cause analysis.",
     version: "1.0",
-    updated: "2026-10-22",
-    href: null,
-    tags: ["incident", "M&M"]
+    updated: "2026-10-27",
+    href: "forms/psi-report.html",
+    pdf: {
+      file: "forms/pdf/psi-report-blank.pdf",
+      label: "Blank PDF",
+      download: "PSI Reporting Form - Blank.pdf",
+      autofill: false
+    },
+    tags: ["PSI", "patient safety incident", "critical incident", "incident", "adverse event", "near miss", "SAC", "root cause analysis", "RCA", "Just Culture", "M&M"]
   }
 ];
