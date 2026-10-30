@@ -26,6 +26,10 @@ leaflets/                  Patient information leaflets (linked by QR code from 
 2. In `assets/js/documents.js`, add or edit its entry: set `href: "forms/preop-assessment.html"`, bump `version`, and update `updated`.
 
 Entries with `href: null` show as "Coming soon".
+Entries with `draft: true` are hidden unless the **Drafts** filter (last in the filter row) is switched on; it stays on
+for that browser tab, and a link ending in `?drafts` opens the page with it on (handy for sending to reviewers).
+Drafts show a Draft badge. Delete `draft: true` once a document is approved.
+The footer's author and *Contact site admin* address come from `author` / `adminEmail` in `SITE`.
 
 ## Versions
 
@@ -65,7 +69,8 @@ Push to GitHub → Settings → Pages → Deploy from branch → `main` / root.
   The form lists risks briefly by frequency group (Common / Uncommon / Rare / Very rare); full wording and exact
   figures are in the leaflet. Catheters are switched off for now (see `CATHETER_RISK` in the content file).
   **Draft watermark:** while `DRAFT: true` in the content file, every form and leaflet shows a DRAFT watermark
-  (screen and print); set it to `false` and rerun `tools/build_pdfs.py` once approved.
+  (screen and print); set it to `false`, delete `draft: true` from their entries in `documents.js`, and rerun
+  `tools/build_pdfs.py` once approved.
   **v1** (detailed risk table, Catheter option, WCG logo) is kept, still working, in `forms/archive/regional-consent-v1/`.
 - **Patient leaflets** (`leaflets/regional-*.html`, `leaflet.js|css`): phone-first pages opened from the QR code on each
   consent form; they also print on A4. QR codes are SVGs in `assets/img/qr/`, made by `python tools/build_qr.py`

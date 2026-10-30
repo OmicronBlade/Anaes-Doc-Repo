@@ -11,10 +11,22 @@
     chips: document.getElementById("chips"),
     list: document.getElementById("list"),
     count: document.getElementById("count"),
-    siteVersion: document.getElementById("site-version")
+    siteVersion: document.getElementById("site-version"),
+    credits: document.getElementById("credits")
   };
 
-  var state = { query: "", category: "All" };
+  // Drafts are hidden by default. "Drafts" switches them on for this tab
+  // (kept while moving between forms); ?drafts in the address turns it on too.
+  var DRAFTS_KEY = "anaesthesia-forms:show-drafts";
+  function draftsStart() {
+    if (/[?&]drafts\b/.test(location.search)) return true;
+    try { return sessionStorage.getItem(DRAFTS_KEY) === "1"; } catch (e) { return false; }
+  }
+  var state = { query: "", category: "All", drafts: draftsStart() };
+
+  function visible() {
+    return DOCS.filter(function (d) { return state.drafts || !d.draft; });
+  }
 
   // ---------- helpers ----------
   function esc(s) {
@@ -43,44 +55,53 @@
   function renderChips() {
     var cats = ["All"].concat(SITE.categories || []);
     // only show categories that actually have documents
+    var docs = visible();
     cats = cats.filter(function (c) {
-      return c === "All" || DOCS.some(function (d) { return d.category === c; });
+      return c === "All" || docs.some(function (d) { return d.category === c; });
     });
+    if (cats.indexOf(state.category) === -1) state.category = "All";
+    var nDrafts = DOCS.filter(function (d) { return d.draft; }).length;
     els.chips.innerHTML = cats.map(function (c) {
       return '<button type="button" class="chip" data-cat="' + esc(c) + '" aria-pressed="' +
         (c === state.category) + '">' + esc(c) + "</button>";
-    }).join("");
+    }).join("") +
+      (nDrafts ? '<button type="button" class="chip chip-drafts" id="drafts-toggle" aria-pressed="' + state.drafts + '"' +
+        ' title="' + (state.drafts ? "Hide" : "Show") + ' documents that are still drafts (not yet approved)">' +
+        '<span class="dot" aria-hidden="true"></span>Drafts <span class="n">' + nDrafts + "</span></button>" : "");
   }
 
+  // Row: title + description | [download] [version] [date] [arrow]
+  // The title link is stretched over the whole row; the download button sits above it.
   function renderDoc(doc) {
-    var meta =
-      '<span class="version-tag screen-only" title="Document version">v' + esc(doc.version) + "</span>" +
-      (doc.updated ? '<span class="updated">' + esc(formatDate(doc.updated)) + "</span>" : "");
-
+    var badge = doc.draft ? ' <span class="draft-badge">Draft</span>' : "";
+    var title = doc.href
+      ? '<a class="doc-link" href="' + esc(doc.href) + '">' + esc(doc.title) + "</a>"
+      : esc(doc.title);
     var body =
-      "<div>" +
-        '<p class="doc-title">' + esc(doc.title) + "</p>" +
+      '<div class="doc-body">' +
+        '<p class="doc-title">' + title + badge + "</p>" +
         (doc.description ? '<p class="doc-desc">' + esc(doc.description) + "</p>" : "") +
       "</div>";
 
-    if (doc.href) {
-      var dl = doc.pdf && doc.pdf.file
-        ? '<a class="dl" href="' + esc(doc.pdf.file) + '" download="' + esc(doc.pdf.download || "") + '"' +
-          ' title="' + (doc.pdf.autofill ? "Download a ready-to-print PDF with the standard values filled in" : "Download the blank form as a ready-to-print PDF") + '">' + DOWNLOAD +
-          "<span>" + esc(doc.pdf.label || "PDF") + "</span></a>"
-        : "";
-      return '<li class="has-link"><a class="doc" href="' + esc(doc.href) + '">' + body +
-        '<div class="doc-meta">' + meta + ARROW + "</div></a>" + dl + "</li>";
-    }
-    return '<li><div class="doc is-pending" aria-disabled="true">' + body +
-      '<div class="doc-meta">' + meta + '<span class="soon">Coming soon</span></div></div></li>';
+    var dl = doc.href && doc.pdf && doc.pdf.file
+      ? '<a class="dl" href="' + esc(doc.pdf.file) + '" download="' + esc(doc.pdf.download || "") + '"' +
+        ' title="' + (doc.pdf.autofill ? "Download a ready-to-print PDF with the standard values filled in" : "Download the blank form as a ready-to-print PDF") + '">' + DOWNLOAD +
+        "<span>" + esc(doc.pdf.label || "PDF") + "</span></a>"
+      : "";
+    var meta = '<div class="doc-meta">' + dl +
+      '<span class="version-tag screen-only" title="Document version">v' + esc(doc.version) + "</span>" +
+      (doc.updated ? '<span class="updated">' + esc(formatDate(doc.updated)) + "</span>" : "") +
+      (doc.href ? ARROW : '<span class="soon">Coming soon</span>') + "</div>";
+
+    return '<li class="' + (doc.href ? "has-link" : "is-pending") + (doc.draft ? " is-draft" : "") + '">' +
+      '<div class="doc">' + body + meta + "</div></li>";
   }
 
   function renderList() {
     var q = state.query.trim().toLowerCase();
     var terms = q ? q.split(/\s+/) : [];
 
-    var matches = DOCS.filter(function (d) {
+    var matches = visible().filter(function (d) {
       if (state.category !== "All" && d.category !== state.category) return false;
       if (!terms.length) return true;
       var h = haystack(d);
@@ -90,7 +111,12 @@
     els.count.textContent = matches.length + (matches.length === 1 ? " document" : " documents");
 
     if (!matches.length) {
-      els.list.innerHTML = '<div class="empty">No documents match “' + esc(state.query) + '”.</div>';
+      var hidden = !state.drafts && terms.length && DOCS.some(function (d) {
+        var h = haystack(d);
+        return d.draft && terms.every(function (t) { return h.indexOf(t) !== -1; });
+      });
+      els.list.innerHTML = '<div class="empty">No documents match “' + esc(state.query) + '”.' +
+        (hidden ? ' Some drafts match — switch on <b>Drafts</b> to see them.' : "") + "</div>";
       return;
     }
 
@@ -120,6 +146,15 @@
   els.chips.addEventListener("click", function (e) {
     var btn = e.target.closest(".chip");
     if (!btn) return;
+    if (btn.id === "drafts-toggle") {
+      state.drafts = !state.drafts;
+      try { sessionStorage.setItem(DRAFTS_KEY, state.drafts ? "1" : "0"); } catch (err) {}
+      renderChips();
+      renderList();
+      var t = document.getElementById("drafts-toggle");
+      if (t) t.focus();
+      return;
+    }
     state.category = btn.getAttribute("data-cat");
     renderChips();
     renderList();
@@ -141,6 +176,12 @@
   if (SITE.title) { els.title.textContent = SITE.title; document.title = SITE.title; }
   if (SITE.subtitle) els.subtitle.textContent = SITE.subtitle;
   if (SITE.version) els.siteVersion.textContent = "v" + SITE.version;
+  if (els.credits) {
+    els.credits.innerHTML =
+      (SITE.author ? "<span>Author: " + esc(SITE.author) + "</span>" : "") +
+      (SITE.adminEmail ? '<a href="mailto:' + esc(SITE.adminEmail) + "?subject=" + encodeURIComponent((SITE.title || "Site") + " – query") +
+        '">Contact site admin</a>' : "");
+  }
 
   renderChips();
   renderList();
